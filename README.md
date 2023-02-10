@@ -35,4 +35,8 @@ Run the application
 ```
 dotnet run
 ```
+
+### **DB Diagram**
+![dbschemetrans](https://user-images.githubusercontent.com/91785830/218200450-6903ad7a-f93d-45f4-af0b-2a6c9c39385a.png)
+
 Contributions are welcome! Please fork the repository and submit a pull request.

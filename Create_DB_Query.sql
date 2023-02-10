@@ -102,12 +102,12 @@ GO
 -- SERVICES TABLE
 CREATE TABLE [services](
 [serviceID] BIGINT IDENTITY(1,1) NOT NULL,
-[VIN] CHAR(17) NOT NULL,
+[VIN] CHAR(17) NULL,
 [totalCost] SMALLMONEY DEFAULT 0 NULL,
 [serviceStartDate] DATE DEFAULT(GETDATE()) NOT NULL,
 [serviceEndDate] DATE NULL,
-[customerID] BIGINT NOT NULL,
-[employeeID] BIGINT NOT NULL,
+[customerID] BIGINT NULL,
+[employeeID] BIGINT NULL,
 
 CONSTRAINT PK_services_serviceID PRIMARY KEY ([serviceID]),
 CONSTRAINT chk_serviceDates CHECK (serviceStartDate <= serviceEndDate or serviceEndDate = null),
@@ -170,66 +170,66 @@ CONSTRAINT PK_persons_addresses_personID_addressID PRIMARY KEY ([personID],[addr
 GO
 
  -- FOREIGN KEYS
-ALTER TABLE [persons_addresses] ADD CONSTRAINT [definesPersonAddress] FOREIGN KEY ([personID])	-- JES GIT
-REFERENCES [persons] ([personID]) ON DELETE NO ACTION ON UPDATE CASCADE							-- NIE RUSZEJ
+ALTER TABLE [persons_addresses] ADD CONSTRAINT [definesPersonAddress] FOREIGN KEY ([personID])	
+REFERENCES [persons] ([personID]) ON DELETE NO ACTION ON UPDATE CASCADE							
 GO
 
-ALTER TABLE [persons_addresses] ADD CONSTRAINT [definesAddressPerson] FOREIGN KEY ([addressID])	-- JES GIT
-REFERENCES [addresses] ([addressID]) ON DELETE CASCADE ON UPDATE CASCADE						-- NIE RUSZEJ!!!!!!!!!!!!!!!!
+ALTER TABLE [persons_addresses] ADD CONSTRAINT [definesAddressPerson] FOREIGN KEY ([addressID])			
+REFERENCES [addresses] ([addressID]) ON DELETE CASCADE ON UPDATE CASCADE								
 GO	
 
-ALTER TABLE [employees] ADD CONSTRAINT [employeeWorksOnPosition] FOREIGN KEY ([position])		-- JES GIT
+ALTER TABLE [employees] ADD CONSTRAINT [employeeWorksOnPosition] FOREIGN KEY ([position])				
 REFERENCES [positions] ([position]) ON DELETE NO ACTION ON UPDATE CASCADE
 GO
 
-ALTER TABLE [vehicles] ADD CONSTRAINT [vehicleHasBodyColor] FOREIGN KEY ([bodyColor])			-- JES GIT
+ALTER TABLE [vehicles] ADD CONSTRAINT [vehicleHasBodyColor] FOREIGN KEY ([bodyColor])					
 REFERENCES [bodyColors] ([bodyColor]) ON DELETE NO ACTION ON UPDATE CASCADE
 GO
 
-ALTER TABLE [vehicles] ADD CONSTRAINT [vehicleFuelType] FOREIGN KEY ([fuelType])				-- JES GIT
+ALTER TABLE [vehicles] ADD CONSTRAINT [vehicleFuelType] FOREIGN KEY ([fuelType])						
 REFERENCES [fuelTypes] ([fuelType]) ON DELETE NO ACTION ON UPDATE CASCADE
 GO
 
-ALTER TABLE [vehicles] ADD CONSTRAINT [personHasVehicle] FOREIGN KEY ([personID])
+ALTER TABLE [vehicles] ADD CONSTRAINT [personHasVehicle] FOREIGN KEY ([personID])									
 REFERENCES [persons] ([personID]) ON DELETE SET NULL ON UPDATE CASCADE
 GO
 
-ALTER TABLE [services] ADD CONSTRAINT [customerOrdersService] FOREIGN KEY ([customerID])
-REFERENCES [customers] ([customerID]) ON DELETE NO ACTION ON UPDATE CASCADE 
+ALTER TABLE [services] ADD CONSTRAINT [customerOrdersService] FOREIGN KEY ([customerID])				
+REFERENCES [customers] ([customerID]) ON DELETE SET NULL ON UPDATE CASCADE 
 GO
 
-ALTER TABLE [services] ADD CONSTRAINT [empResponsibleForService] FOREIGN KEY ([employeeID])
-REFERENCES [employees] ([employeeID]) ON DELETE NO ACTION ON UPDATE CASCADE
+ALTER TABLE [services] ADD CONSTRAINT [empResponsibleForService] FOREIGN KEY ([employeeID])				
+REFERENCES [employees] ([employeeID]) ON DELETE SET NULL ON UPDATE CASCADE
 GO
 
-ALTER TABLE [services] ADD CONSTRAINT [serviceAssignedToVehicle] FOREIGN KEY ([VIN])
-REFERENCES [vehicles] ([VIN]) ON DELETE NO ACTION ON UPDATE NO ACTION
+ALTER TABLE [services] ADD CONSTRAINT [serviceAssignedToVehicle] FOREIGN KEY ([VIN])					
+REFERENCES [vehicles] ([VIN]) ON DELETE SET NULL ON UPDATE CASCADE
 GO
 
-ALTER TABLE [tasks] ADD CONSTRAINT [serviceConsistsOfTasks] FOREIGN KEY ([serviceID])
+ALTER TABLE [tasks] ADD CONSTRAINT [serviceConsistsOfTasks] FOREIGN KEY ([serviceID])					
 REFERENCES [services] ([serviceID]) ON DELETE NO ACTION ON UPDATE CASCADE
 GO
 
-ALTER TABLE [tasks_employees] ADD CONSTRAINT [definesEmployeeTask] FOREIGN KEY ([employeeID])			-- JES GIT
+ALTER TABLE [tasks_employees] ADD CONSTRAINT [definesEmployeeTask] FOREIGN KEY ([employeeID])			
 REFERENCES [employees] ([employeeID]) ON DELETE CASCADE ON UPDATE CASCADE
 GO
 
-ALTER TABLE [tasks_employees] ADD CONSTRAINT [definesTaskEmployee] FOREIGN KEY ([taskID],[serviceID])	-- JES GIT
+ALTER TABLE [tasks_employees] ADD CONSTRAINT [definesTaskEmployee] FOREIGN KEY ([taskID],[serviceID])	
 REFERENCES [tasks] ([taskID],[serviceID]) ON DELETE CASCADE ON UPDATE NO ACTION
 GO
 
-ALTER TABLE [tasks_parts] ADD CONSTRAINT [definesPartTask] FOREIGN KEY ([partID])						-- JES GIT
+ALTER TABLE [tasks_parts] ADD CONSTRAINT [definesPartTask] FOREIGN KEY ([partID])						
 REFERENCES [parts] ([partID]) ON DELETE NO ACTION ON UPDATE CASCADE
 GO
 
-ALTER TABLE [tasks_parts] ADD CONSTRAINT [definesTaskPart] FOREIGN KEY ([taskID],[serviceID])			-- JES GIT
+ALTER TABLE [tasks_parts] ADD CONSTRAINT [definesTaskPart] FOREIGN KEY ([taskID],[serviceID])			
 REFERENCES [tasks] ([taskID],[serviceID]) ON DELETE CASCADE ON UPDATE CASCADE
 GO
 
-ALTER TABLE [employees] ADD CONSTRAINT [personIsEmployee] FOREIGN KEY ([employeeID])
+ALTER TABLE [employees] ADD CONSTRAINT [personIsEmployee] FOREIGN KEY ([employeeID])						
 REFERENCES [persons] ([personID]) ON DELETE NO ACTION ON UPDATE NO ACTION
 GO
 
-ALTER TABLE [customers] ADD CONSTRAINT [personIsCustomer] FOREIGN KEY ([customerID])
+ALTER TABLE [customers] ADD CONSTRAINT [personIsCustomer] FOREIGN KEY ([customerID])					
 REFERENCES [persons] ([personID]) ON DELETE NO ACTION ON UPDATE NO ACTION
 GO

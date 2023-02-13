@@ -54,7 +54,7 @@ public partial class AcmeDataContext : DbContext
 
             entity.Property(e => e.AddressId).HasColumnName("addressID");
             entity.Property(e => e.BuildingNo)
-                .HasMaxLength(6)
+                .HasMaxLength(6) 
                 .IsUnicode(false)
                 .HasColumnName("buildingNo");
             entity.Property(e => e.City)

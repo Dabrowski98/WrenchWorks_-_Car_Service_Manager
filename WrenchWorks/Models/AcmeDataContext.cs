@@ -35,7 +35,7 @@ public partial class AcmeDataContext : DbContext
     public virtual DbSet<Service> Services { get; set; }
 
     public virtual DbSet<Task> Tasks { get; set; }
-
+    
     public virtual DbSet<Vehicle> Vehicles { get; set; }
     
     
@@ -47,6 +47,7 @@ public partial class AcmeDataContext : DbContext
     {
         modelBuilder.Entity<Address>(entity =>
         {
+            
             entity.HasKey(e => e.AddressId).HasName("PK_addresses_personID_addressID");
 
             entity.ToTable("addresses");

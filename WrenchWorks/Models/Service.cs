@@ -9,7 +9,7 @@ public partial class Service
 
     public string? Vin { get; set; }
 
-    public decimal? TotalCost { get; set; }
+    public bool PaidOff { get; set; }
 
     public DateTime ServiceStartDate { get; set; }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using WrenchWorks.Models;
 
@@ -10,7 +11,7 @@ public partial class WrenchWorksDbContext : DbContext
     public WrenchWorksDbContext()
     {
     }
-
+    
     public WrenchWorksDbContext(DbContextOptions<WrenchWorksDbContext> options)
         : base(options)
     {
@@ -23,6 +24,7 @@ public partial class WrenchWorksDbContext : DbContext
     public virtual DbSet<Customer> Customers { get; set; }
 
     public virtual DbSet<Employee> Employees { get; set; }
+    
     public virtual DbSet<FuelType> FuelTypes { get; set; }
 
     public virtual DbSet<Part> Parts { get; set; }
@@ -38,11 +40,6 @@ public partial class WrenchWorksDbContext : DbContext
     public virtual DbSet<Models.Task> Tasks { get; set; }
 
     public virtual DbSet<Vehicle> Vehicles { get; set; }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=DESKTOP-7UTOM62;Database=WrenchWorksDB;Trusted_Connection=true;Trust Server Certificate=true;");
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Address>(entity =>
@@ -100,9 +97,6 @@ public partial class WrenchWorksDbContext : DbContext
                 .HasMaxLength(9)
                 .IsUnicode(false)
                 .HasColumnName("NIP");
-            entity.Property(e => e.TotalDue)
-                .HasColumnType("money")
-                .HasColumnName("totalDue");
 
             entity.HasOne(d => d.CustomerNavigation).WithOne(p => p.Customer)
                 .HasForeignKey<Customer>(d => d.CustomerId)
@@ -205,6 +199,7 @@ public partial class WrenchWorksDbContext : DbContext
                         j.ToTable("tasks_parts");
                     });
         });
+    
 
         modelBuilder.Entity<Person>(entity =>
         {
@@ -249,6 +244,11 @@ public partial class WrenchWorksDbContext : DbContext
             entity.Property(e => e.PositionName)
                 .HasMaxLength(35)
                 .HasColumnName("positionName");
+            entity.Property(e => e.ServiceHourRate)
+                .HasPrecision(2,1)
+                .HasColumnType("decimal")
+                .HasColumnName("serviceHourRate");
+                
             entity.Property(e => e.SupervisorId).HasColumnName("supervisorID");
 
             entity.HasOne(d => d.Supervisor).WithMany(p => p.InverseSupervisor)
@@ -298,15 +298,13 @@ public partial class WrenchWorksDbContext : DbContext
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("date")
                 .HasColumnName("serviceStartDate");
-            entity.Property(e => e.TotalCost)
-                .HasDefaultValueSql("((0))")
-                .HasColumnType("smallmoney")
-                .HasColumnName("totalCost");
             entity.Property(e => e.Vin)
                 .HasMaxLength(17)
                 .IsUnicode(false)
                 .IsFixedLength()
                 .HasColumnName("VIN");
+            entity.Property(e => e.PaidOff).HasColumnName("paidOff");
+                
 
             entity.HasOne(d => d.Customer).WithMany(p => p.Services)
                 .HasForeignKey(d => d.CustomerId)
@@ -338,9 +336,6 @@ public partial class WrenchWorksDbContext : DbContext
             entity.Property(e => e.Name)
                 .HasMaxLength(50)
                 .HasColumnName("name");
-            entity.Property(e => e.PartsCost)
-                .HasColumnType("smallmoney")
-                .HasColumnName("partsCost");
             entity.Property(e => e.ServiceId).HasColumnName("serviceID");
 
             entity.HasOne(d => d.Service).WithMany(p => p.Tasks)
@@ -378,10 +373,6 @@ public partial class WrenchWorksDbContext : DbContext
                 .HasMaxLength(30)
                 .HasColumnName("model");
             entity.Property(e => e.PersonId).HasColumnName("personID");
-            entity.Property(e => e.PowerSource)
-                .HasMaxLength(16)
-                .IsUnicode(false)
-                .HasColumnName("powerSource");
             entity.Property(e => e.YearOfProduction)
                 .HasColumnType("date")
                 .HasColumnName("yearOfProduction");
@@ -400,16 +391,16 @@ public partial class WrenchWorksDbContext : DbContext
                 .HasConstraintName("vehicleHasPowerSources");
         });
         modelBuilder.Entity<Position>().HasData(
-            new Position { PositionId = 9, SupervisorId = 3, PositionName = "Trainee" },
-            new Position { PositionId = 7, SupervisorId = 4, PositionName = "Assistant Diagonostic Specialist" },
-            new Position { PositionId = 8, SupervisorId = 6, PositionName = "Assistant Automotive Specialist" },
-            new Position { PositionId = 6, SupervisorId = 3, PositionName = "Automotive Specialist" },
-            new Position { PositionId = 4, SupervisorId = 3, PositionName = "Diagonostic Specialist" },
-            new Position { PositionId = 5, SupervisorId = 1, PositionName = "Quality Specialist" },
-            new Position { PositionId = 3, SupervisorId = 0, PositionName = "Workshop Manager" },
-            new Position { PositionId = 2, SupervisorId = 0, PositionName = "Parts Manager" },
-            new Position { PositionId = 1, SupervisorId = 0, PositionName = "Quality Engineer" },
-            new Position { PositionId = 0, SupervisorId = null, PositionName = "Owner" }
+            new Position { PositionId = 9, SupervisorId = 3, PositionName = "Trainee", ServiceHourRate = (decimal)0.0},
+            new Position { PositionId = 7, SupervisorId = 4, PositionName = "Assistant Diagonostic Specialist", ServiceHourRate = (decimal)0.3},
+            new Position { PositionId = 8, SupervisorId = 6, PositionName = "Assistant Automotive Specialist", ServiceHourRate = (decimal)0.3},
+            new Position { PositionId = 6, SupervisorId = 3, PositionName = "Automotive Specialist", ServiceHourRate = (decimal)0.6},
+            new Position { PositionId = 4, SupervisorId = 3, PositionName = "Diagonostic Specialist", ServiceHourRate = (decimal)0.6},
+            new Position { PositionId = 5, SupervisorId = 1, PositionName = "Quality Specialist", ServiceHourRate = (decimal)0.6},
+            new Position { PositionId = 3, SupervisorId = 0, PositionName = "Workshop Manager", ServiceHourRate = 1},
+            new Position { PositionId = 2, SupervisorId = 0, PositionName = "Parts Manager", ServiceHourRate = 1},
+            new Position { PositionId = 1, SupervisorId = 0, PositionName = "Quality Engineer", ServiceHourRate = 1},
+            new Position { PositionId = 0, SupervisorId = null, PositionName = "Owner", ServiceHourRate = 1}
         );
         
         modelBuilder.Entity<FuelType>().HasData(
@@ -437,6 +428,8 @@ public partial class WrenchWorksDbContext : DbContext
             new BodyColor { Color = "Beige" },
             new BodyColor { Color = "CUSTOM" }
         );
+        
+        
         OnModelCreatingPartial(modelBuilder);
     }
 

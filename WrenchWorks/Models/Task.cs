@@ -13,8 +13,6 @@ public partial class Task
 
     public float ExecutionTime { get; set; }
 
-    public decimal PartsCost { get; set; }
-
     public long ServiceId { get; set; }
 
     public virtual Service Service { get; set; } = null!;

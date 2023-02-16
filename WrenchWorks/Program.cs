@@ -10,9 +10,9 @@ var identityDbContextConnectionString = builder.Configuration.GetConnectionStrin
 builder.Services.AddDbContext<IdentityDbContext>(options =>
     options.UseSqlite(identityDbContextConnectionString));
 
-var WrenchWorksDbContextConnectionString = builder.Configuration.GetConnectionString("WrenchWorksDb");
-builder.Services.AddDbContext<DbContext>(options =>
-    options.UseSqlServer(WrenchWorksDbContextConnectionString));
+var wrenchWorksDbContextConnectionString = builder.Configuration.GetConnectionString("WrenchWorksDb");
+builder.Services.AddDbContext<WrenchWorksDbContext>(options =>
+    options.UseSqlServer(wrenchWorksDbContextConnectionString));
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 

@@ -196,10 +196,6 @@ namespace WrenchWorks.Data.WrenchWorksMigrations
                         .HasColumnType("varchar(9)")
                         .HasColumnName("NIP");
 
-                    b.Property<decimal>("TotalDue")
-                        .HasColumnType("money")
-                        .HasColumnName("totalDue");
-
                     b.HasKey("CustomerId")
                         .HasName("PK_customers_customerID");
 
@@ -371,6 +367,11 @@ namespace WrenchWorks.Data.WrenchWorksMigrations
                         .HasColumnType("nvarchar(35)")
                         .HasColumnName("positionName");
 
+                    b.Property<decimal>("ServiceHourRate")
+                        .HasPrecision(2, 1)
+                        .HasColumnType("decimal")
+                        .HasColumnName("serviceHourRate");
+
                     b.Property<short?>("SupervisorId")
                         .HasColumnType("smallint")
                         .HasColumnName("supervisorID");
@@ -390,60 +391,70 @@ namespace WrenchWorks.Data.WrenchWorksMigrations
                         {
                             PositionId = (short)9,
                             PositionName = "Trainee",
+                            ServiceHourRate = 0m,
                             SupervisorId = (short)3
                         },
                         new
                         {
                             PositionId = (short)7,
                             PositionName = "Assistant Diagonostic Specialist",
+                            ServiceHourRate = 0.3m,
                             SupervisorId = (short)4
                         },
                         new
                         {
                             PositionId = (short)8,
                             PositionName = "Assistant Automotive Specialist",
+                            ServiceHourRate = 0.3m,
                             SupervisorId = (short)6
                         },
                         new
                         {
                             PositionId = (short)6,
                             PositionName = "Automotive Specialist",
+                            ServiceHourRate = 0.6m,
                             SupervisorId = (short)3
                         },
                         new
                         {
                             PositionId = (short)4,
                             PositionName = "Diagonostic Specialist",
+                            ServiceHourRate = 0.6m,
                             SupervisorId = (short)3
                         },
                         new
                         {
                             PositionId = (short)5,
                             PositionName = "Quality Specialist",
+                            ServiceHourRate = 0.6m,
                             SupervisorId = (short)1
                         },
                         new
                         {
                             PositionId = (short)3,
                             PositionName = "Workshop Manager",
+                            ServiceHourRate = 1m,
                             SupervisorId = (short)0
                         },
                         new
                         {
                             PositionId = (short)2,
                             PositionName = "Parts Manager",
+                            ServiceHourRate = 1m,
                             SupervisorId = (short)0
                         },
                         new
                         {
                             PositionId = (short)1,
                             PositionName = "Quality Engineer",
+                            ServiceHourRate = 1m,
                             SupervisorId = (short)0
                         },
                         new
                         {
                             PositionId = (short)0,
-                            PositionName = "Owner"
+                            PositionName = "Owner",
+                            ServiceHourRate = 1m
                         });
                 });
 
@@ -504,6 +515,10 @@ namespace WrenchWorks.Data.WrenchWorksMigrations
                         .HasColumnType("bigint")
                         .HasColumnName("employeeID");
 
+                    b.Property<bool>("PaidOff")
+                        .HasColumnType("bit")
+                        .HasColumnName("paidOff");
+
                     b.Property<DateTime?>("ServiceEndDate")
                         .HasColumnType("date")
                         .HasColumnName("serviceEndDate");
@@ -513,12 +528,6 @@ namespace WrenchWorks.Data.WrenchWorksMigrations
                         .HasColumnType("date")
                         .HasColumnName("serviceStartDate")
                         .HasDefaultValueSql("(getdate())");
-
-                    b.Property<decimal?>("TotalCost")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("smallmoney")
-                        .HasColumnName("totalCost")
-                        .HasDefaultValueSql("((0))");
 
                     b.Property<string>("Vin")
                         .HasMaxLength(17)
@@ -563,10 +572,6 @@ namespace WrenchWorks.Data.WrenchWorksMigrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("name");
-
-                    b.Property<decimal>("PartsCost")
-                        .HasColumnType("smallmoney")
-                        .HasColumnName("partsCost");
 
                     b.Property<long>("ServiceId")
                         .HasColumnType("bigint")
@@ -624,10 +629,7 @@ namespace WrenchWorks.Data.WrenchWorksMigrations
 
                     b.Property<string>("PowerSource")
                         .IsRequired()
-                        .HasMaxLength(16)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(16)")
-                        .HasColumnName("powerSource");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("YearOfProduction")
                         .HasColumnType("date")

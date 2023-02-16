@@ -2,10 +2,12 @@
 
 using Microsoft.EntityFrameworkCore.Migrations;
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace WrenchWorks.Data.WrenchWorksMigrations
 {
     /// <inheritdoc />
-    public partial class InitWrenchWorksDbContext : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -73,7 +75,8 @@ namespace WrenchWorks.Data.WrenchWorksMigrations
                 {
                     positionID = table.Column<short>(type: "smallint", nullable: false),
                     supervisorID = table.Column<short>(type: "smallint", nullable: true),
-                    positionName = table.Column<string>(type: "nvarchar(35)", maxLength: 35, nullable: false)
+                    positionName = table.Column<string>(type: "nvarchar(35)", maxLength: 35, nullable: false),
+                    serviceHourRate = table.Column<decimal>(type: "decimal(2,1)", precision: 2, scale: 1, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -135,7 +138,6 @@ namespace WrenchWorks.Data.WrenchWorksMigrations
                 columns: table => new
                 {
                     customerID = table.Column<long>(type: "bigint", nullable: false),
-                    totalDue = table.Column<decimal>(type: "money", nullable: false),
                     NIP = table.Column<string>(type: "varchar(9)", unicode: false, maxLength: 9, nullable: true)
                 },
                 constraints: table =>
@@ -180,7 +182,7 @@ namespace WrenchWorks.Data.WrenchWorksMigrations
                     model = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     yearOfProduction = table.Column<DateTime>(type: "date", nullable: false),
                     engineCapacity = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: true),
-                    powerSource = table.Column<string>(type: "varchar(16)", unicode: false, maxLength: 16, nullable: false),
+                    PowerSource = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     engineNo = table.Column<string>(type: "varchar(16)", unicode: false, maxLength: 16, nullable: true),
                     bodyColor = table.Column<string>(type: "varchar(16)", unicode: false, maxLength: 16, nullable: true),
                     personID = table.Column<long>(type: "bigint", nullable: true)
@@ -214,7 +216,7 @@ namespace WrenchWorks.Data.WrenchWorksMigrations
                     serviceID = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     VIN = table.Column<string>(type: "char(17)", unicode: false, fixedLength: true, maxLength: 17, nullable: true),
-                    totalCost = table.Column<decimal>(type: "smallmoney", nullable: true, defaultValueSql: "((0))"),
+                    paidOff = table.Column<bool>(type: "bit", nullable: false),
                     serviceStartDate = table.Column<DateTime>(type: "date", nullable: false, defaultValueSql: "(getdate())"),
                     serviceEndDate = table.Column<DateTime>(type: "date", nullable: true),
                     customerID = table.Column<long>(type: "bigint", nullable: true),
@@ -252,7 +254,6 @@ namespace WrenchWorks.Data.WrenchWorksMigrations
                     name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     description = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     executionTime = table.Column<float>(type: "real", nullable: false),
-                    partsCost = table.Column<decimal>(type: "smallmoney", nullable: false),
                     serviceID = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
@@ -310,6 +311,58 @@ namespace WrenchWorks.Data.WrenchWorksMigrations
                         principalTable: "tasks",
                         principalColumn: "taskID",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "bodyColors",
+                column: "bodyColor",
+                values: new object[]
+                {
+                    "Beige",
+                    "Black",
+                    "Blue",
+                    "Bronze",
+                    "Brown",
+                    "CUSTOM",
+                    "Gold",
+                    "Gray",
+                    "Green",
+                    "Orange",
+                    "Pink",
+                    "Purple",
+                    "Red",
+                    "Silver",
+                    "White",
+                    "Yellow"
+                });
+
+            migrationBuilder.InsertData(
+                table: "fuelTypes",
+                column: "fuelType",
+                values: new object[]
+                {
+                    "Diesel",
+                    "Electric",
+                    "Hydrogen",
+                    "Nuclear",
+                    "Petrol"
+                });
+
+            migrationBuilder.InsertData(
+                table: "positions",
+                columns: new[] { "positionID", "positionName", "serviceHourRate", "supervisorID" },
+                values: new object[,]
+                {
+                    { (short)0, "Owner", 1m, null },
+                    { (short)1, "Quality Engineer", 1m, (short)0 },
+                    { (short)2, "Parts Manager", 1m, (short)0 },
+                    { (short)3, "Workshop Manager", 1m, (short)0 },
+                    { (short)4, "Diagonostic Specialist", 0.6m, (short)3 },
+                    { (short)5, "Quality Specialist", 0.6m, (short)1 },
+                    { (short)6, "Automotive Specialist", 0.6m, (short)3 },
+                    { (short)9, "Trainee", 0m, (short)3 },
+                    { (short)7, "Assistant Diagonostic Specialist", 0.3m, (short)4 },
+                    { (short)8, "Assistant Automotive Specialist", 0.3m, (short)6 }
                 });
 
             migrationBuilder.CreateIndex(

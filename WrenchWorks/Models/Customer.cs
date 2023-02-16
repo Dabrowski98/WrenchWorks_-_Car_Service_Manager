@@ -7,8 +7,6 @@ public partial class Customer
 {
     public long CustomerId { get; set; }
 
-    public decimal TotalDue { get; set; }
-
     public string? Nip { get; set; }
 
     public virtual Person CustomerNavigation { get; set; } = null!;

@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using Azure.Identity;
 using Microsoft.EntityFrameworkCore;
+using WrenchWorks.Models;
 
-namespace WrenchWorks.Models;
+namespace WrenchWorks.Data;
 
-public partial class AcmeDataContext : DbContext
+public partial class WrenchWorksDbContext : DbContext
 {
-    public AcmeDataContext()
+    public WrenchWorksDbContext()
     {
     }
 
-    public AcmeDataContext(DbContextOptions<AcmeDataContext> options)
+    public WrenchWorksDbContext(DbContextOptions<WrenchWorksDbContext> options)
         : base(options)
     {
     }
@@ -32,29 +32,29 @@ public partial class AcmeDataContext : DbContext
 
     public virtual DbSet<Position> Positions { get; set; }
 
+    public virtual DbSet<PowerSource> PowerSources { get; set; }
+
     public virtual DbSet<Service> Services { get; set; }
 
-    public virtual DbSet<Task> Tasks { get; set; }
-    
+    public virtual DbSet<Models.Task> Tasks { get; set; }
+
     public virtual DbSet<Vehicle> Vehicles { get; set; }
-    
-    
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Server=DESKTOP-7UTOM62;Database=WrenchWorksDB;Trusted_Connection=true;Trust Server Certificate=true;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Address>(entity =>
         {
-            
             entity.HasKey(e => e.AddressId).HasName("PK_addresses_personID_addressID");
 
             entity.ToTable("addresses");
 
             entity.Property(e => e.AddressId).HasColumnName("addressID");
             entity.Property(e => e.BuildingNo)
-                .HasMaxLength(6) 
+                .HasMaxLength(6)
                 .IsUnicode(false)
                 .HasColumnName("buildingNo");
             entity.Property(e => e.City)
@@ -124,32 +124,33 @@ public partial class AcmeDataContext : DbContext
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("date")
                 .HasColumnName("dateOfEmployment");
-            entity.Property(e => e.Position)
-                .HasMaxLength(20)
-                .HasColumnName("position");
+            entity.Property(e => e.PositionName)
+                .HasMaxLength(35)
+                .HasColumnName("positionName");
 
             entity.HasOne(d => d.EmployeeNavigation).WithOne(p => p.Employee)
                 .HasForeignKey<Employee>(d => d.EmployeeId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("personIsEmployee");
 
-            entity.HasOne(d => d.PositionNavigation).WithMany(p => p.Employees)
-                .HasForeignKey(d => d.Position)
+            entity.HasOne(d => d.PositionNameNavigation).WithMany(p => p.Employees)
+                .HasPrincipalKey(p => p.PositionName)
+                .HasForeignKey(d => d.PositionName)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("employeeWorksOnPosition");
 
             entity.HasMany(d => d.Tasks).WithMany(p => p.Employees)
                 .UsingEntity<Dictionary<string, object>>(
                     "TasksEmployee",
-                    r => r.HasOne<Task>().WithMany()
-                        .HasForeignKey("TaskId", "ServiceId")
+                    r => r.HasOne<Models.Task>().WithMany()
+                        .HasForeignKey("TaskId")
                         .HasConstraintName("definesTaskEmployee"),
                     l => l.HasOne<Employee>().WithMany()
                         .HasForeignKey("EmployeeId")
                         .HasConstraintName("definesEmployeeTask"),
                     j =>
                     {
-                        j.HasKey("EmployeeId", "TaskId", "ServiceId");
+                        j.HasKey("EmployeeId", "TaskId");
                         j.ToTable("tasks_employees");
                     });
         });
@@ -192,8 +193,8 @@ public partial class AcmeDataContext : DbContext
             entity.HasMany(d => d.Tasks).WithMany(p => p.Parts)
                 .UsingEntity<Dictionary<string, object>>(
                     "TasksPart",
-                    r => r.HasOne<Task>().WithMany()
-                        .HasForeignKey("TaskId", "ServiceId")
+                    r => r.HasOne<Models.Task>().WithMany()
+                        .HasForeignKey("TaskId")
                         .HasConstraintName("definesTaskPart"),
                     l => l.HasOne<Part>().WithMany()
                         .HasForeignKey("PartId")
@@ -201,7 +202,7 @@ public partial class AcmeDataContext : DbContext
                         .HasConstraintName("definesPartTask"),
                     j =>
                     {
-                        j.HasKey("PartId", "TaskId", "ServiceId");
+                        j.HasKey("PartId", "TaskId");
                         j.ToTable("tasks_parts");
                     });
         });
@@ -213,6 +214,7 @@ public partial class AcmeDataContext : DbContext
             entity.ToTable("persons");
 
             entity.Property(e => e.PersonId).HasColumnName("personID");
+            entity.Property(e => e.AddressId).HasColumnName("addressID");
             entity.Property(e => e.Email)
                 .HasMaxLength(50)
                 .IsUnicode(false)
@@ -228,32 +230,57 @@ public partial class AcmeDataContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("telephoneNumber");
 
-            entity.HasMany(d => d.Addresses).WithMany(p => p.People)
-                .UsingEntity<Dictionary<string, object>>(
-                    "PersonsAddress",
-                    r => r.HasOne<Address>().WithMany()
-                        .HasForeignKey("AddressId")
-                        .HasConstraintName("definesAddressPerson"),
-                    l => l.HasOne<Person>().WithMany()
-                        .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("definesPersonAddress"),
-                    j =>
-                    {
-                        j.HasKey("PersonId", "AddressId").HasName("PK_persons_addresses_personID_addressID");
-                        j.ToTable("persons_addresses");
-                    });
+            entity.HasOne(d => d.Address).WithMany(p => p.People)
+                .HasForeignKey(d => d.AddressId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("definesPersonsAddress");
         });
 
         modelBuilder.Entity<Position>(entity =>
         {
-            entity.HasKey(e => e.Position1).HasName("PK_positions_position");
+            entity.HasKey(e => e.PositionId).HasName("PK_positions_position");
 
             entity.ToTable("positions");
 
-            entity.Property(e => e.Position1)
-                .HasMaxLength(20)
-                .HasColumnName("position");
+            entity.HasIndex(e => e.PositionName, "UNIQ_position").IsUnique();
+
+            entity.Property(e => e.PositionId)
+                .ValueGeneratedNever()
+                .HasColumnName("positionID");
+            entity.Property(e => e.PositionName)
+                .HasMaxLength(35)
+                .HasColumnName("positionName");
+            entity.Property(e => e.SupervisorId).HasColumnName("supervisorID");
+
+            entity.HasOne(d => d.Supervisor).WithMany(p => p.InverseSupervisor)
+                .HasForeignKey(d => d.SupervisorId)
+                .HasConstraintName("isSupervisor");
+        });
+
+        modelBuilder.Entity<PowerSource>(entity =>
+        {
+            entity.HasKey(e => e.Vin).HasName("PK_powerSources_VIN");
+
+            entity.ToTable("powerSources");
+
+            entity.Property(e => e.Vin)
+                .HasMaxLength(17)
+                .IsUnicode(false)
+                .IsFixedLength()
+                .HasColumnName("VIN");
+            entity.Property(e => e.Biofuel).HasColumnName("biofuel");
+            entity.Property(e => e.Cng).HasColumnName("CNG");
+            entity.Property(e => e.Hybrid).HasColumnName("hybrid");
+            entity.Property(e => e.Lpg).HasColumnName("LPG");
+            entity.Property(e => e.MainPowerSourceType)
+                .HasMaxLength(16)
+                .IsUnicode(false)
+                .HasColumnName("mainPowerSourceType");
+
+            entity.HasOne(d => d.MainPowerSourceTypeNavigation).WithMany(p => p.PowerSources)
+                .HasForeignKey(d => d.MainPowerSourceType)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("powerSourceType");
         });
 
         modelBuilder.Entity<Service>(entity =>
@@ -298,16 +325,13 @@ public partial class AcmeDataContext : DbContext
                 .HasConstraintName("serviceAssignedToVehicle");
         });
 
-        modelBuilder.Entity<Task>(entity =>
+        modelBuilder.Entity<Models.Task>(entity =>
         {
-            entity.HasKey(e => new { e.TaskId, e.ServiceId }).HasName("PK_activities_activityID");
+            entity.HasKey(e => e.TaskId).HasName("PK_tasks_taskID");
 
             entity.ToTable("tasks");
 
-            entity.Property(e => e.TaskId)
-                .ValueGeneratedOnAdd()
-                .HasColumnName("taskID");
-            entity.Property(e => e.ServiceId).HasColumnName("serviceID");
+            entity.Property(e => e.TaskId).HasColumnName("taskID");
             entity.Property(e => e.Description)
                 .HasMaxLength(255)
                 .HasColumnName("description");
@@ -318,6 +342,7 @@ public partial class AcmeDataContext : DbContext
             entity.Property(e => e.PartsCost)
                 .HasColumnType("smallmoney")
                 .HasColumnName("partsCost");
+            entity.Property(e => e.ServiceId).HasColumnName("serviceID");
 
             entity.HasOne(d => d.Service).WithMany(p => p.Tasks)
                 .HasForeignKey(d => d.ServiceId)
@@ -347,10 +372,6 @@ public partial class AcmeDataContext : DbContext
                 .HasMaxLength(16)
                 .IsUnicode(false)
                 .HasColumnName("engineNo");
-            entity.Property(e => e.FuelType)
-                .HasMaxLength(16)
-                .IsUnicode(false)
-                .HasColumnName("fuelType");
             entity.Property(e => e.Maker)
                 .HasMaxLength(30)
                 .HasColumnName("maker");
@@ -358,6 +379,10 @@ public partial class AcmeDataContext : DbContext
                 .HasMaxLength(30)
                 .HasColumnName("model");
             entity.Property(e => e.PersonId).HasColumnName("personID");
+            entity.Property(e => e.PowerSource)
+                .HasMaxLength(16)
+                .IsUnicode(false)
+                .HasColumnName("powerSource");
             entity.Property(e => e.YearOfProduction)
                 .HasColumnType("date")
                 .HasColumnName("yearOfProduction");
@@ -366,15 +391,14 @@ public partial class AcmeDataContext : DbContext
                 .HasForeignKey(d => d.BodyColor)
                 .HasConstraintName("vehicleHasBodyColor");
 
-            entity.HasOne(d => d.FuelTypeNavigation).WithMany(p => p.Vehicles)
-                .HasForeignKey(d => d.FuelType)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("vehicleFuelType");
-
             entity.HasOne(d => d.Person).WithMany(p => p.Vehicles)
                 .HasForeignKey(d => d.PersonId)
                 .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("personHasVehicle");
+
+            entity.HasOne(d => d.VinNavigation).WithOne(p => p.Vehicle)
+                .HasForeignKey<Vehicle>(d => d.Vin)
+                .HasConstraintName("vehicleHasPowerSources");
         });
 
         OnModelCreatingPartial(modelBuilder);

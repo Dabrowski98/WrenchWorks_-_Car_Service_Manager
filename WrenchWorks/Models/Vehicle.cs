@@ -15,7 +15,7 @@ public partial class Vehicle
 
     public string? EngineCapacity { get; set; }
 
-    public string FuelType { get; set; } = null!;
+    public string PowerSource { get; set; } = null!;
 
     public string? EngineNo { get; set; }
 
@@ -25,9 +25,9 @@ public partial class Vehicle
 
     public virtual BodyColor? BodyColorNavigation { get; set; }
 
-    public virtual FuelType FuelTypeNavigation { get; set; } = null!;
-
     public virtual Person? Person { get; set; }
 
     public virtual ICollection<Service> Services { get; } = new List<Service>();
+
+    public virtual PowerSource VinNavigation { get; set; } = null!;
 }

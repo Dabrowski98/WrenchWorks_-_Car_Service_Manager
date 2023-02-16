@@ -9,11 +9,11 @@ public partial class Employee
 
     public DateTime DateOfEmployment { get; set; }
 
-    public string Position { get; set; } = null!;
+    public string PositionName { get; set; } = null!;
 
     public virtual Person EmployeeNavigation { get; set; } = null!;
 
-    public virtual Position PositionNavigation { get; set; } = null!;
+    public virtual Position PositionNameNavigation { get; set; } = null!;
 
     public virtual ICollection<Service> Services { get; } = new List<Service>();
 

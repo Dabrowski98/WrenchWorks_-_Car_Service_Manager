@@ -15,11 +15,13 @@ public partial class Person
 
     public string? Email { get; set; }
 
+    public long? AddressId { get; set; }
+
+    public virtual Address? Address { get; set; }
+
     public virtual Customer? Customer { get; set; }
 
     public virtual Employee? Employee { get; set; }
 
     public virtual ICollection<Vehicle> Vehicles { get; } = new List<Vehicle>();
-
-    public virtual ICollection<Address> Addresses { get; } = new List<Address>();
 }

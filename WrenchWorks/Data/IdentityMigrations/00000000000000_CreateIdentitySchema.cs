@@ -1,7 +1,6 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace WrenchWorks.Data.Migrations
+namespace WrenchWorks.Data.IdentityMigrations
 {
     public partial class CreateIdentitySchema : Migration
     {

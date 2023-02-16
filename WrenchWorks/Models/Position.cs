@@ -5,7 +5,15 @@ namespace WrenchWorks.Models;
 
 public partial class Position
 {
-    public string Position1 { get; set; } = null!;
+    public short PositionId { get; set; }
+
+    public short? SupervisorId { get; set; }
+
+    public string PositionName { get; set; } = null!;
 
     public virtual ICollection<Employee> Employees { get; } = new List<Employee>();
+
+    public virtual ICollection<Position> InverseSupervisor { get; } = new List<Position>();
+
+    public virtual Position? Supervisor { get; set; }
 }

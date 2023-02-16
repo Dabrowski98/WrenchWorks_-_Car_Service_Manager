@@ -7,5 +7,5 @@ public partial class FuelType
 {
     public string FuelType1 { get; set; } = null!;
 
-    public virtual ICollection<Vehicle> Vehicles { get; } = new List<Vehicle>();
+    public virtual ICollection<PowerSource> PowerSources { get; } = new List<PowerSource>();
 }

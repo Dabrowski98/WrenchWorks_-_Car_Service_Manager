@@ -1,18 +1,23 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WrenchWorks.Data;
+using WrenchWorks.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
-                       throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite(connectionString));
+var identityDbContextConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<IdentityDbContext>(options =>
+    options.UseSqlite(identityDbContextConnectionString));
+
+var WrenchWorksDbContextConnectionString = builder.Configuration.GetConnectionString("WrenchWorksDb");
+builder.Services.AddDbContext<DbContext>(options =>
+    options.UseSqlServer(WrenchWorksDbContextConnectionString));
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+    .AddEntityFrameworkStores<IdentityDbContext>();
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 var app = builder.Build();

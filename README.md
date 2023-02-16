@@ -37,6 +37,7 @@ dotnet run
 ```
 
 ### **DB Diagram**
-![dbschemetrans](https://user-images.githubusercontent.com/91785830/218200450-6903ad7a-f93d-45f4-af0b-2a6c9c39385a.png)
+![dbschemepic](https://user-images.githubusercontent.com/91785830/219369895-a209c672-70f0-4e99-aae7-a34fdc0e5664.png)
 
 Contributions are welcome! Please fork the repository and submit a pull request.
+

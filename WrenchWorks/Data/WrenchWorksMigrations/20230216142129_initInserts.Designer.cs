@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WrenchWorks.Data;
 
@@ -11,9 +12,11 @@ using WrenchWorks.Data;
 namespace WrenchWorks.Data.WrenchWorksMigrations
 {
     [DbContext(typeof(WrenchWorksDbContext))]
-    partial class WrenchWorksDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230216142129_initInserts")]
+    partial class initInserts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

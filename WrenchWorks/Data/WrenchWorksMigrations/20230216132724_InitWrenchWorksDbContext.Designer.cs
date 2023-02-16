@@ -106,13 +106,13 @@ namespace WrenchWorks.Data.WrenchWorksMigrations
 
             modelBuilder.Entity("WrenchWorks.Models.BodyColor", b =>
                 {
-                    b.Property<string>("BodyColor1")
+                    b.Property<string>("Color")
                         .HasMaxLength(16)
                         .IsUnicode(false)
                         .HasColumnType("varchar(16)")
                         .HasColumnName("bodyColor");
 
-                    b.HasKey("BodyColor1")
+                    b.HasKey("Color")
                         .HasName("PK_bodyColors_bodyColor");
 
                     b.ToTable("bodyColors", (string)null);
@@ -168,14 +168,14 @@ namespace WrenchWorks.Data.WrenchWorksMigrations
 
             modelBuilder.Entity("WrenchWorks.Models.FuelType", b =>
                 {
-                    b.Property<string>("FuelType1")
+                    b.Property<string>("Fuel")
                         .HasMaxLength(16)
                         .IsUnicode(false)
                         .HasColumnType("varchar(16)")
                         .HasColumnName("fuelType");
 
-                    b.HasKey("FuelType1")
-                        .HasName("PK_fuelTypes_fuelType");
+                    b.HasKey("Fuel")
+                        .HasName("PK_fuelTypes_fuelTypeName");
 
                     b.ToTable("fuelTypes", (string)null);
                 });

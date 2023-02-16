@@ -23,7 +23,6 @@ public partial class WrenchWorksDbContext : DbContext
     public virtual DbSet<Customer> Customers { get; set; }
 
     public virtual DbSet<Employee> Employees { get; set; }
-
     public virtual DbSet<FuelType> FuelTypes { get; set; }
 
     public virtual DbSet<Part> Parts { get; set; }
@@ -78,11 +77,11 @@ public partial class WrenchWorksDbContext : DbContext
 
         modelBuilder.Entity<BodyColor>(entity =>
         {
-            entity.HasKey(e => e.BodyColor1).HasName("PK_bodyColors_bodyColor");
+            entity.HasKey(e => e.Color).HasName("PK_bodyColors_bodyColor");
 
             entity.ToTable("bodyColors");
 
-            entity.Property(e => e.BodyColor1)
+            entity.Property(e => e.Color)
                 .HasMaxLength(16)
                 .IsUnicode(false)
                 .HasColumnName("bodyColor");
@@ -157,11 +156,11 @@ public partial class WrenchWorksDbContext : DbContext
 
         modelBuilder.Entity<FuelType>(entity =>
         {
-            entity.HasKey(e => e.FuelType1).HasName("PK_fuelTypes_fuelType");
+            entity.HasKey(e => e.Fuel).HasName("PK_fuelTypes_fuelType");
 
             entity.ToTable("fuelTypes");
 
-            entity.Property(e => e.FuelType1)
+            entity.Property(e => e.Fuel)
                 .HasMaxLength(16)
                 .IsUnicode(false)
                 .HasColumnName("fuelType");
@@ -400,7 +399,44 @@ public partial class WrenchWorksDbContext : DbContext
                 .HasForeignKey<Vehicle>(d => d.Vin)
                 .HasConstraintName("vehicleHasPowerSources");
         });
-
+        modelBuilder.Entity<Position>().HasData(
+            new Position { PositionId = 9, SupervisorId = 3, PositionName = "Trainee" },
+            new Position { PositionId = 7, SupervisorId = 4, PositionName = "Assistant Diagonostic Specialist" },
+            new Position { PositionId = 8, SupervisorId = 6, PositionName = "Assistant Automotive Specialist" },
+            new Position { PositionId = 6, SupervisorId = 3, PositionName = "Automotive Specialist" },
+            new Position { PositionId = 4, SupervisorId = 3, PositionName = "Diagonostic Specialist" },
+            new Position { PositionId = 5, SupervisorId = 1, PositionName = "Quality Specialist" },
+            new Position { PositionId = 3, SupervisorId = 0, PositionName = "Workshop Manager" },
+            new Position { PositionId = 2, SupervisorId = 0, PositionName = "Parts Manager" },
+            new Position { PositionId = 1, SupervisorId = 0, PositionName = "Quality Engineer" },
+            new Position { PositionId = 0, SupervisorId = null, PositionName = "Owner" }
+        );
+        
+        modelBuilder.Entity<FuelType>().HasData(
+            new FuelType { Fuel = "Petrol" },
+            new FuelType { Fuel = "Diesel" },
+            new FuelType { Fuel = "Electric" },
+            new FuelType { Fuel = "Hydrogen" },
+            new FuelType { Fuel = "Nuclear" }
+        );
+        modelBuilder.Entity<BodyColor>().HasData(
+            new BodyColor { Color = "Red" },
+            new BodyColor { Color = "Blue" },
+            new BodyColor { Color = "Green" },
+            new BodyColor { Color = "Yellow" },
+            new BodyColor { Color = "Orange" },
+            new BodyColor { Color = "Black" },
+            new BodyColor { Color = "White" },
+            new BodyColor { Color = "Silver" },
+            new BodyColor { Color = "Gray" },
+            new BodyColor { Color = "Gold" },
+            new BodyColor { Color = "Brown" },
+            new BodyColor { Color = "Purple" },
+            new BodyColor { Color = "Bronze" },
+            new BodyColor { Color = "Pink" },
+            new BodyColor { Color = "Beige" },
+            new BodyColor { Color = "CUSTOM" }
+        );
         OnModelCreatingPartial(modelBuilder);
     }
 

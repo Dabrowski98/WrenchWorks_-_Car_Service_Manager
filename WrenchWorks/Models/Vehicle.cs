@@ -13,7 +13,7 @@ public partial class Vehicle
 
     public DateTime YearOfProduction { get; set; }
 
-    public string? EngineCapacity { get; set; }
+    public decimal? EngineCapacity { get; set; }
 
     public string PowerSource { get; set; } = null!;
 

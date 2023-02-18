@@ -1,0 +1,99 @@
+Name,Description,ExecutionTime,ServiceId
+Changing springs,Improving handling and suspension performance,1.0,1
+Head replacement,Repairing damage to the cylinder head,5.0,2
+Brake pad replacement,Replacing worn-out brake pads to ensure safe stopping,1.0,3
+Oil change,Maintaining engine lubrication and preventing damage,0.5,4
+Suspension repair,Repairing worn-out or damaged suspension components for improved handling and comfort,3.0,5
+Spark plug replacement,Ensuring proper ignition and fuel economy,1.0,5
+Radiator flush,Removing buildup and improving cooling efficiency,1.0,6
+Wheel alignment,Improving tire wear and handling performance,1.0,7
+Transmission fluid change,Maintaining transmission lubrication and preventing damage,2.0,8
+Timing belt replacement,Preventing engine damage from belt failure,4.0,9
+Exhaust system repair,Fixing leaks and improving engine performance,1.0,10
+Battery replacement,Ensuring proper starting and electrical system function,0.5,10
+Fuel filter replacement,Preventing engine damage from fuel contaminants,1.0,11
+Engine tune-up,Improving engine performance and fuel economy,2.0,12
+Air filter replacement,Ensuring proper airflow and preventing engine damage,0.5,13
+Ignition system repair,Fixing issues with spark plugs and coils for proper ignition,3.0,14
+Tire rotation,Improving tire wear and handling performance,1.0,15
+Alternator replacement,Ensuring proper electrical system function,1.0,15
+Power steering fluid change,Maintaining proper power steering function and preventing damage,2.0,16
+Clutch repair,Fixing issues with clutch engagement and disengagement,0.5,17
+Brake line repair,Repairing damaged brake lines for safe stopping,3.0,18
+Fuel injector cleaning,Improving fuel efficiency and engine performance,5.0,19
+AC system repair,Fixing issues with cooling and comfort in the cabin,1.0,20
+Wheel bearing replacement,Preventing wheel damage and improving handling,0.5,20
+Serpentine belt replacement,Preventing engine damage from belt failure,3.0,21
+Transmission rebuild,Repairing internal transmission components for proper function,0.5,22
+Shock absorber replacement,Improving handling and comfort,3.0,23
+Brake caliper replacement,Ensuring proper brake function and safe stopping,1.0,24
+Head gasket replacement,Preventing engine damage from coolant leaks,1.0,25
+Catalytic converter replacement,Ensuring proper emissions control and engine performance,2.0,25
+Radiator replacement,Ensuring proper cooling function and preventing engine damage,0.5,26
+Brake rotor replacement,Ensuring safe stopping and improving brake function,3.0,27
+Water pump replacement,Preventing engine damage from coolant leaks and improving cooling function,5.0,28
+Distributor replacement,Ensuring proper ignition and fuel economy,1.0,29
+Fuel pump replacement,Ensuring proper fuel delivery and preventing engine damage,1.0,30
+Tie rod end replacement,Improving steering function and handling,1.0,30
+Drive shaft replacement,Preventing drivetrain damage and improving performance,1.0,31
+Valve cover gasket replacement,Preventing oil leaks and ensuring proper lubrication,2.0,32
+Camshaft position sensor replacement,Ensuring proper engine timing and fuel economy,4.0,33
+Starter motor replacement,Ensuring proper starting function,5.0,34
+Oxygen sensor replacement,Ensuring proper fuel economy and emissions control,1.0,35
+Throttle body cleaning,Improving throttle response and fuel economy,0.5,35
+Intake manifold gasket replacement,Preventing vacuum leaks and improving engine performance,3.0,36
+Brake booster replacement,Improving brake function and safety,1.0,37
+EGR valve replacement,Ensuring proper emissions control and engine performance,1.0,38
+Heater core replacement,Improving cabin heating function and comfort,1.0,39
+Control arm replacement,Improving handling and suspension performance,2.0,40
+Mass airflow sensor replacement,Ensuring proper fuel economy and engine performance,4.0,40
+Engine mount replacement,Improving engine stability and reducing vibration,2.0,41
+Drive belt replacement,Preventing engine damage from belt failure,1.0,42
+Shock mount replacement,Improving handling and comfort,5.0,43
+Exhaust manifold replacement,Fixing leaks and improving engine performance,3.0,44
+Brake line flush,Removing air and contaminants from the brake lines for improved function,5.0,44
+Engine oil leak repair,Preventing oil loss and ensuring proper lubrication,3.0,44
+Sway bar link replacement,Improving handling and suspension performance,2.0,45
+Power window motor replacement,Ensuring proper window function,0.5,45
+Ignition coil replacement,Ensuring proper ignition and fuel economy,0.5,45
+Fuel pump relay replacement, faulty relay causing fuel pump to fail,1.0,46
+Throttle position sensor replacement, worn out or damaged sensor affecting engine performance,2.0,46
+Ignition switch replacement, worn or damaged switch causing engine to not start,4.0,47
+Wheel hub assembly replacement, worn or damaged hub assembly causing wheel to wobble,4.0,47
+Brake drum replacement, worn or damaged drum affecting braking performance,2.0,48
+Valve stem seal replacement, worn out or damaged seals causing oil leakage and smoke from the exhaust,4.0,49
+Tie rod boot replacement, torn or damaged boot causing dirt and debris to enter the tie rod,0.5,50
+Drive belt tensioner replacement, worn out or damaged tensioner affecting the performance of the drive belt,0.5,50
+Oil pressure sensor replacement, faulty sensor causing inaccurate oil pressure readings,1.0,51
+Engine control module replacement, malfunctioning module affecting various engine functions,2.0,51
+Radiator fan motor replacement, worn out or damaged fan motor causing overheating,4.0,51
+Idle air control valve replacement, faulty valve affecting engine idle speed,0.5,52
+Heater blower motor replacement, worn out or damaged blower motor causing lack of heat or A/C,0.5,52
+Fuel tank replacement, rust or damage to the fuel tank causing leaks or reduced fuel capacity,1.0,52
+Brake master cylinder replacement, worn out or damaged cylinder affecting brake performance,2.0,53
+A/C compressor replacement, worn out or damaged compressor affecting A/C performance,4.0,53
+CV joint replacement, worn out or damaged joint causing clicking or popping noise when turning,2.0,53
+Timing chain replacement, worn out or damaged chain affecting engine performance and timing,4.0,54
+Engine coolant temperature sensor replacement, faulty sensor affecting accurate temperature readings and engine performance,0.5,55
+Ignition distributor cap and rotor replacement, worn out or damaged cap and rotor affecting ignition and engine performance,0.5,55
+Window regulator replacement, worn out or damaged regulator affecting window movement,0.5,56
+Mass air flow sensor cleaning, dirty sensor affecting engine performance and fuel economy,0.5,57
+Brake bleeder screw replacement, worn out or damaged screw affecting brake bleeding and maintenance,1.0,58
+Intake air temperature sensor replacement, faulty sensor affecting engine performance and fuel economy,2.0,59
+Brake proportioning valve replacement, worn out or damaged valve affecting brake balance and performance,4.0,59
+Oil pump replacement, worn out or damaged pump affecting engine lubrication and performance,0.5,59
+Camshaft sensor replacement, faulty sensor affecting accurate camshaft position readings and engine performance,0.5,60
+Fuel pressure regulator replacement, faulty regulator affecting fuel pressure and engine performance,1.0,60
+Transmission mount replacement, worn out or damaged mount affecting transmission stability and performance,2.0,60
+Drive belt pulley replacement, worn out or damaged pulley affecting drive belt performance and engine accessories,4.0,60
+Ignition control module replacement, worn out or damaged module affecting ignition and engine performance,2.0,61
+Wheel speed sensor replacement, worn out or damaged sensor affecting accurate speed readings and ABS performance,4.0,62
+PCV valve replacement, worn out or clogged valve affecting engine performance and emissions,0.5,63
+Brake line fitting replacement, worn out or damaged fitting affecting brake performance and safety,0.5,64
+Valve cover replacement, worn out or damaged cover causing oil leaks and engine damage,1.0,64
+AC condenser replacement, worn out or damaged condenser affecting A/C performance,2.0,64
+Brake rotor resurfacing, worn out or damaged rotor affecting braking performance,4.0,65
+Fuel tank filler neck replacement, rust or damage to the filler neck causing fuel leaks or difficulty filling up,0.5,65
+Idle speed control motor replacement, worn out or damaged motor affecting engine idle speed and performance,2.0,65
+Transmission cooler line replacement, worn out or damaged line affecting transmission cooling and performance,3.0,66
+Catalytic converter heat shield replacement, worn out or damaged shield affecting exhaust system performance and safety.,1.0,67

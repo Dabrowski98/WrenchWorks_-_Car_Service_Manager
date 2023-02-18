@@ -1,0 +1,41 @@
+AddressId,Region,City,Street,BuildingNo,FlatNo,PostCode
+1,Washington,Seattle,1st Ave N,89,NULL,98109
+2,New York,New York,5th Ave,7A,NULL,10001
+3,Illinois,Chicago,W Madison St,57,10A,60606
+4,California,Los Angeles,S Figueroa St,22,7B,90015
+5,Florida,Miami,Collins Ave,99,NULL,33140
+6,Michigan,Detroit,Grand River Ave,75,5C,48227
+7,California,San Francisco,Mission St,18,2B,94103
+8,Massachusetts,Boston,Beacon St,42,12A,2108
+9,Texas,Dallas,Main St,12,1A,75201
+10,Pennsylvania,Philadelphia,S Broad St,38,3C,19102
+11,Missouri,St. Louis,Market St,8,4A,63101
+12,Georgia,Atlanta,Peachtree St,54,9B,30309
+13,Oregon,Portland,SW 6th Ave,95,8C,97204
+14,Florida,Orlando,International Dr,7,NULL,32819
+15,Colorado,Denver,16th St Mall,31,3B,80202
+16,Minnesota,Minneapolis,Hennepin Ave,41,5C,55403
+17,Tennessee,Nashville,Broadway,64,1B,37203
+18,New Jersey,Newark,Market St,31,6A,7102
+19,Missouri,Kansas City,Main St,96,9C,64105
+20,Texas,Houston,Main St,71,4A,77002
+21,Arizona,Phoenix,W Van Buren St,10,8B,85003
+22,Pennsylvania,Pittsburgh,Forbes Ave,13,NULL,15222
+23,North Carolina,Raleigh,Wilmington St,37,6A,27601
+24,Indiana,Indianapolis,Meridian St,33,2B,46204
+25,Washington,Spokane,Riverside Ave,28,3C,99201
+26,Texas,Austin,S Congress Ave,47,7B,78704
+27,Oregon,Portland,NW 23rd Ave,79,4B,97210
+28,New Jersey,Jersey City,Newark Ave,23,NULL,7302
+29,Wisconsin,Milwaukee,E Wisconsin Ave,18,6C,53202
+30,Florida,Jacksonville,Monroe St,36,10B,32202
+31,California,Sacramento,K St,84,5A,95814
+32,Maryland,Baltimore,E Lombard St,31,NULL,21202
+33,Florida,Tampa,Channelside Dr,32,8A,33602
+34,Ohio,Cleveland,Public Square,10,10C,44113
+35,Idaho,Boise,8th St,46,5B,83702
+36,New Mexico,Albuquerque,Central Ave,85,7C,87102
+37,Washington,Seattle,Pike St,45,2C,98101
+38,District of Columbia,Washington,Constitution Ave NW,2,11A,20500
+39,Florida,Miami,Biscayne Blvd,56,9C,33132
+40,New York,New York, 5th Ave, 8B,NULL,10001

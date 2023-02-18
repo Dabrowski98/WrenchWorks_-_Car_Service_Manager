@@ -1,0 +1,104 @@
+Manufacturer,ManufacturerArtNo,PartName,Category,Price
+Eibach,E10-15-011-01-22,Rear Springs,Suspension,150.00
+Eibach,E10-15-011-01-23,Front Springs,Suspension,200.00
+Fel-Pro,26176 PT,Head Gasket,Engine,300.00
+PowerStop,Z36-1392,Brake Pad,Brakes,80.00
+PowerStop,Z36-1423,Brake Rotor,Brakes,120.00
+Mobil 1,120760,Oil,Engine,50.00
+EGK,423252,Oil Filter,Engine,10.00
+Bilstein,24-186674,Suspension,Suspension,1200.00
+NGK,5464,Spark Plug,Engine,30.00
+Prestone,AF2100,Radiator Flush,Cooling System,20.00
+Prestone,AF2222,Radiator Flush,Cooling System,20.00
+Hunter Engineering,WA100,Wheel Alignment,Alignment,100.00
+Valvoline,804751,Transmission Fluid,Transmission,80.00
+Gates,TCKWP331,Timing Belt,Engine,250.00
+Walker,54431,Exhaust System,Exhaust,100.00
+Optima,8025-160,Battery,Electrical,200.00
+Bosch,8025-160,Alternator,Electrical,150.00
+WIX,33003,Fuel Filter,Fuel System,20.00
+K&N,33-2300,Air Filter,Fuel System,130.00
+Bosch,0986AG1214,Engine Tune-up,Engine,150.00
+K&N,33-2304,Air Filter,Engine,50.00
+Denso,671-8110,Ignition System,Electrical,200.00
+Michelin,421323,Tire,Tires,150.00
+Bosch,AL8807X,Alternator,Electrical,300.00
+Prestone,AS263,Power Steering Fluid,Steering,20.00
+Luk,17-050,Clutch,Transmission,500.00
+Dorman,919-170,Brake Line,Brakes,50.00
+BG Products,44K,Fuel Injector,Fuel System,100.00
+UAC,CO 29002C,AC System,HVAC,150.00
+Timken,510070,Wheel Bearing,Suspension,50.00
+Gates,K060925,Serpentine Belt,Engine,40.00
+Monroe,58620,Shock Absorber,Suspension,100.00
+ACDelco,18FR2696,Brake Caliper,Brakes,150.00
+Fel-Pro,HS26223PT,Head Gasket,Engine,500.00
+MagnaFlow,545006,Catalytic Converter,Exhaust,500.00
+CSF,3470,Radiator,Cooling System,200.00
+PowerStop,AR8360XPR,Brake Rotor,Brakes,100.00
+Gates,43526,Water Pump,Engine,100.00
+ACDelco,88961867,Distributor,Electrical,150.00
+Airtex,E3614M,Fuel Pump,Fuel System,200.00
+Moog,ES3488,Tie Rod End,Steering,50.00
+Dorman,936-588,Drive Shaft,Drivetrain,300.00
+Fel-Pro,VS50504R,Valve Cover Gasket,Engine,50.00
+Bosch,0232103020,Camshaft position sensor,Engine Sensors,38.99
+Denso,2800194,Starter motor,Starters,178.99
+NGK,24642,Oxygen sensor,Engine Sensors,59.99
+CRC,05078,Throttle body,Fuel Additives,7.99
+Fel-Pro,MS98016T,Intake manifold gasket,Gaskets,23.99
+ACDelco,178-0861,Brake booster,Brake Parts,164.99
+Standard Motor Products,EGV1025,EGR valve,EGR Valves,108.99
+Spectra Premium,99306,Heater core,Heating and Cooling,64.99
+Moog,RK620900,Control arm,Suspension and Steering,76.99
+Delphi,AF10141,Mass airflow sensor,Engine Sensors,87.99
+Anchor,9129,Engine mount,Engine Parts,39.99
+Gates,K070683,Drive belt,Belts and Hoses,19.99
+Monroe,902910,Shock mount,Suspension and Steering,32.99
+Dorman,674-536,Exhaust manifold,Exhaust Systems,149.99
+Prestone,AS401,Brake line,Brake Fluids,7.99
+BlueDevil,00234,Engine Doctor,Engine Additives,17.99
+Mevotech,MK90660,Sway bar link,Suspension and Steering,34.99
+Dorman,742-251,Power window motor,Electrical and Lighting,49.99
+Bosch,0221604010,Ignition coil,Ignition Systems,47.99
+Standard Motor Products,RY116T,Fuel pump relay,Fuel System,7.99
+Delphi,SS10382,Throttle position sensor,Engine Sensors,74.99
+ACDelco,D1499A,Ignition switch,Ignition Systems,41.99
+Timken,SP580310,Wheel hub assembly,Wheel Bearings,153.99
+Raybestos,9628R,Brake drum,Brake Parts,38.99
+Fel-Pro,SS72643,Valve stem seal,Gaskets,24.99
+Moog,ES3172,Tie rod boot,Suspension and Steering,11.99
+Gates,38270,Drive belt tensioner,Belts and Hoses,58.99
+ACDelco,12677836,Oil pressure sensor,Engine Sensors,29.99
+ACDelco,12612384,Engine control module,Engine Parts,289.99
+Four Seasons,35123,Radiator fan motor,Heating and Cooling,64.99
+Standard Motor Products,AC27T,Idle air control valve,Fuel System,71.99
+TYC,700070,Heater blower motor,Electrical and Lighting,38.99
+Spectra Premium,GM43C,Fuel tank,Fuel System,153.99
+ACDelco,18M1052,Brake master cylinder,Brake Parts,65.99
+Spectra Premium,636801,A/C compressor,A/C and Heating,200.00
+ACDelco,45D1000,CV joint,Drivetrain,120.00
+Gates,TCKWP295A,Timing chain,Engine,150.00
+Standard Motor Products,TX18,Engine coolant temperature sensor,Cooling System,30.00
+Borg Warner,DR471,Ignition distributor cap and rotor,Engine,35.00
+Dorman,741-644,Window regulator,Body,60.00
+Bosch,2421654165,Mass air flow sensor,Engine,25.00
+Dorman,13949,Brake bleeder screw,Brakes,5.00
+Bosch,0261230099,Intake air temperature sensor,Engine,40.00
+ACDelco,172-2386,Brake proportioning valve,Brakes,120.00
+Melling,M295,Oil pump,Engine,75.00
+Standard Motor Products,PC232,Camshaft sensor,Engine,50.00
+Bosch,0280160557,Fuel pressure regulator,Engine,60.00
+Anchor,2710,Transmission mount,Transmission,40.00
+Dorman,300-202,Drive belt pulley,Engine,25.00
+ACDelco,D1977A,Ignition control module,Engine,60.00
+Standard Motor Products,ALS1761,Wheel speed sensor,Brakes,60.00
+ACDelco,214-2296,PCV valve,Engine,10.00
+Dorman,785-437,Brake line fitting,Brakes,5.00
+Dorman,264-911,Valve cover,Engine,40.00
+Spectra Premium,7-3644,AC condenser,A/C and Heating,100.00
+Brembo,5213213,Brake Rotor,Brakes,50.00
+Dorman,577-915,Fuel tank filler neck,Fuel System,70.00
+Standard Motor Products,AC27,Idle speed control motor,Engine,50.00
+Dorman,624-117,Transmission cooler line,Transmission,30.00
+Dorman,936-011,Catalytic converter heat shield,Exhaust System,25.00

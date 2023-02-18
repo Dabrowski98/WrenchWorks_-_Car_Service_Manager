@@ -12,6 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="CsvHelper" Version="30.0.1" />
         <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.2" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.2" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.2" />
@@ -33,6 +34,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Data\WrenchWorksMigrations" />
       <Folder Include="Migrations" />
       <Folder Include="Services\Interfaces" />
     </ItemGroup>

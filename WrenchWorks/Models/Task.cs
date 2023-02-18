@@ -11,7 +11,7 @@ public partial class Task
 
     public string Description { get; set; } = null!;
 
-    public float ExecutionTime { get; set; }
+    public decimal ExecutionTime { get; set; }
 
     public long ServiceId { get; set; }
 

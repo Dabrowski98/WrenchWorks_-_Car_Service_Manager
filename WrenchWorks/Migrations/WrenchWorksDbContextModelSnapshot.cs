@@ -8,7 +8,7 @@ using WrenchWorks.Data;
 
 #nullable disable
 
-namespace WrenchWorks.Data.WrenchWorksMigrations
+namespace WrenchWorks.Migrations
 {
     [DbContext(typeof(WrenchWorksDbContext))]
     partial class WrenchWorksDbContextModelSnapshot : ModelSnapshot
@@ -21,6 +21,21 @@ namespace WrenchWorks.Data.WrenchWorksMigrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("PersonsAddress", b =>
+                {
+                    b.Property<long>("PersonId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("AddressId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("PersonId", "AddressId");
+
+                    b.HasIndex("AddressId");
+
+                    b.ToTable("persons_addresses", (string)null);
+                });
 
             modelBuilder.Entity("TasksEmployee", b =>
                 {
@@ -99,7 +114,7 @@ namespace WrenchWorks.Data.WrenchWorksMigrations
                         .HasColumnName("street");
 
                     b.HasKey("AddressId")
-                        .HasName("PK_addresses_personID_addressID");
+                        .HasName("PK_addresses_addressID");
 
                     b.ToTable("addresses", (string)null);
                 });
@@ -110,78 +125,12 @@ namespace WrenchWorks.Data.WrenchWorksMigrations
                         .HasMaxLength(16)
                         .IsUnicode(false)
                         .HasColumnType("varchar(16)")
-                        .HasColumnName("bodyColor");
+                        .HasColumnName("color");
 
-                    b.HasKey("Color")
-                        .HasName("PK_bodyColors_bodyColor");
-
+                    b.HasKey("color")
+                        .HasName("PK_bodyColors_color");
+    
                     b.ToTable("bodyColors", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Color = "Red"
-                        },
-                        new
-                        {
-                            Color = "Blue"
-                        },
-                        new
-                        {
-                            Color = "Green"
-                        },
-                        new
-                        {
-                            Color = "Yellow"
-                        },
-                        new
-                        {
-                            Color = "Orange"
-                        },
-                        new
-                        {
-                            Color = "Black"
-                        },
-                        new
-                        {
-                            Color = "White"
-                        },
-                        new
-                        {
-                            Color = "Silver"
-                        },
-                        new
-                        {
-                            Color = "Gray"
-                        },
-                        new
-                        {
-                            Color = "Gold"
-                        },
-                        new
-                        {
-                            Color = "Brown"
-                        },
-                        new
-                        {
-                            Color = "Purple"
-                        },
-                        new
-                        {
-                            Color = "Bronze"
-                        },
-                        new
-                        {
-                            Color = "Pink"
-                        },
-                        new
-                        {
-                            Color = "Beige"
-                        },
-                        new
-                        {
-                            Color = "CUSTOM"
-                        });
                 });
 
             modelBuilder.Entity("WrenchWorks.Models.Customer", b =>
@@ -234,34 +183,12 @@ namespace WrenchWorks.Data.WrenchWorksMigrations
                         .HasMaxLength(16)
                         .IsUnicode(false)
                         .HasColumnType("varchar(16)")
-                        .HasColumnName("fuelType");
+                        .HasColumnName("fuel");
 
                     b.HasKey("Fuel")
-                        .HasName("PK_fuelTypes_fuelType");
+                        .HasName("PK_fuelTypes_Fuel");
 
                     b.ToTable("fuelTypes", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Fuel = "Petrol"
-                        },
-                        new
-                        {
-                            Fuel = "Diesel"
-                        },
-                        new
-                        {
-                            Fuel = "Electric"
-                        },
-                        new
-                        {
-                            Fuel = "Hydrogen"
-                        },
-                        new
-                        {
-                            Fuel = "Nuclear"
-                        });
                 });
 
             modelBuilder.Entity("WrenchWorks.Models.Part", b =>
@@ -318,10 +245,6 @@ namespace WrenchWorks.Data.WrenchWorksMigrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("PersonId"));
 
-                    b.Property<long?>("AddressId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("addressID");
-
                     b.Property<string>("Email")
                         .HasMaxLength(50)
                         .IsUnicode(false)
@@ -350,8 +273,6 @@ namespace WrenchWorks.Data.WrenchWorksMigrations
                     b.HasKey("PersonId")
                         .HasName("PK_persons_personID");
 
-                    b.HasIndex("AddressId");
-
                     b.ToTable("persons", (string)null);
                 });
 
@@ -368,8 +289,7 @@ namespace WrenchWorks.Data.WrenchWorksMigrations
                         .HasColumnName("positionName");
 
                     b.Property<decimal>("ServiceHourRate")
-                        .HasPrecision(2, 1)
-                        .HasColumnType("decimal")
+                        .HasColumnType("decimal(2, 1)")
                         .HasColumnName("serviceHourRate");
 
                     b.Property<short?>("SupervisorId")
@@ -385,77 +305,6 @@ namespace WrenchWorks.Data.WrenchWorksMigrations
                         .IsUnique();
 
                     b.ToTable("positions", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            PositionId = (short)9,
-                            PositionName = "Trainee",
-                            ServiceHourRate = 0m,
-                            SupervisorId = (short)3
-                        },
-                        new
-                        {
-                            PositionId = (short)7,
-                            PositionName = "Assistant Diagonostic Specialist",
-                            ServiceHourRate = 0.3m,
-                            SupervisorId = (short)4
-                        },
-                        new
-                        {
-                            PositionId = (short)8,
-                            PositionName = "Assistant Automotive Specialist",
-                            ServiceHourRate = 0.3m,
-                            SupervisorId = (short)6
-                        },
-                        new
-                        {
-                            PositionId = (short)6,
-                            PositionName = "Automotive Specialist",
-                            ServiceHourRate = 0.6m,
-                            SupervisorId = (short)3
-                        },
-                        new
-                        {
-                            PositionId = (short)4,
-                            PositionName = "Diagonostic Specialist",
-                            ServiceHourRate = 0.6m,
-                            SupervisorId = (short)3
-                        },
-                        new
-                        {
-                            PositionId = (short)5,
-                            PositionName = "Quality Specialist",
-                            ServiceHourRate = 0.6m,
-                            SupervisorId = (short)1
-                        },
-                        new
-                        {
-                            PositionId = (short)3,
-                            PositionName = "Workshop Manager",
-                            ServiceHourRate = 1m,
-                            SupervisorId = (short)0
-                        },
-                        new
-                        {
-                            PositionId = (short)2,
-                            PositionName = "Parts Manager",
-                            ServiceHourRate = 1m,
-                            SupervisorId = (short)0
-                        },
-                        new
-                        {
-                            PositionId = (short)1,
-                            PositionName = "Quality Engineer",
-                            ServiceHourRate = 1m,
-                            SupervisorId = (short)0
-                        },
-                        new
-                        {
-                            PositionId = (short)0,
-                            PositionName = "Owner",
-                            ServiceHourRate = 1m
-                        });
                 });
 
             modelBuilder.Entity("WrenchWorks.Models.PowerSource", b =>
@@ -563,8 +412,8 @@ namespace WrenchWorks.Data.WrenchWorksMigrations
                         .HasColumnType("nvarchar(255)")
                         .HasColumnName("description");
 
-                    b.Property<float>("ExecutionTime")
-                        .HasColumnType("real")
+                    b.Property<decimal>("ExecutionTime")
+                        .HasColumnType("decimal(2, 1)")
                         .HasColumnName("executionTime");
 
                     b.Property<string>("Name")
@@ -600,9 +449,8 @@ namespace WrenchWorks.Data.WrenchWorksMigrations
                         .HasColumnType("varchar(16)")
                         .HasColumnName("bodyColor");
 
-                    b.Property<string>("EngineCapacity")
-                        .HasMaxLength(5)
-                        .HasColumnType("nvarchar(5)")
+                    b.Property<decimal?>("EngineCapacity")
+                        .HasColumnType("decimal(2, 1)")
                         .HasColumnName("engineCapacity");
 
                     b.Property<string>("EngineNo")
@@ -629,7 +477,10 @@ namespace WrenchWorks.Data.WrenchWorksMigrations
 
                     b.Property<string>("PowerSource")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(16)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(16)")
+                        .HasColumnName("powerSource");
 
                     b.Property<DateTime>("YearOfProduction")
                         .HasColumnType("date")
@@ -643,6 +494,23 @@ namespace WrenchWorks.Data.WrenchWorksMigrations
                     b.HasIndex("PersonId");
 
                     b.ToTable("vehicles", (string)null);
+                });
+
+            modelBuilder.Entity("PersonsAddress", b =>
+                {
+                    b.HasOne("WrenchWorks.Models.Address", null)
+                        .WithMany()
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("definesAddressesPerson");
+
+                    b.HasOne("WrenchWorks.Models.Person", null)
+                        .WithMany()
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("definesPersonsAddress");
                 });
 
             modelBuilder.Entity("TasksEmployee", b =>
@@ -707,17 +575,6 @@ namespace WrenchWorks.Data.WrenchWorksMigrations
                     b.Navigation("EmployeeNavigation");
 
                     b.Navigation("PositionNameNavigation");
-                });
-
-            modelBuilder.Entity("WrenchWorks.Models.Person", b =>
-                {
-                    b.HasOne("WrenchWorks.Models.Address", "Address")
-                        .WithMany("People")
-                        .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .HasConstraintName("definesPersonsAddress");
-
-                    b.Navigation("Address");
                 });
 
             modelBuilder.Entity("WrenchWorks.Models.Position", b =>
@@ -804,11 +661,6 @@ namespace WrenchWorks.Data.WrenchWorksMigrations
                     b.Navigation("Person");
 
                     b.Navigation("VinNavigation");
-                });
-
-            modelBuilder.Entity("WrenchWorks.Models.Address", b =>
-                {
-                    b.Navigation("People");
                 });
 
             modelBuilder.Entity("WrenchWorks.Models.BodyColor", b =>

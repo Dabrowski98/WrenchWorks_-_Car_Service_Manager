@@ -1,10 +1,9 @@
-﻿#nullable disable
-
+﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+#nullable disable
 
-namespace WrenchWorks.Data.WrenchWorksMigrations
+namespace WrenchWorks.Migrations
 {
     /// <inheritdoc />
     public partial class init : Migration
@@ -27,7 +26,7 @@ namespace WrenchWorks.Data.WrenchWorksMigrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_addresses_personID_addressID", x => x.addressID);
+                    table.PrimaryKey("PK_addresses_addressID", x => x.addressID);
                 });
 
             migrationBuilder.CreateTable(
@@ -70,13 +69,29 @@ namespace WrenchWorks.Data.WrenchWorksMigrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "persons",
+                columns: table => new
+                {
+                    personID = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    firstName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    lastName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    telephoneNumber = table.Column<string>(type: "varchar(12)", unicode: false, maxLength: 12, nullable: false),
+                    email = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_persons_personID", x => x.personID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "positions",
                 columns: table => new
                 {
                     positionID = table.Column<short>(type: "smallint", nullable: false),
                     supervisorID = table.Column<short>(type: "smallint", nullable: true),
                     positionName = table.Column<string>(type: "nvarchar(35)", maxLength: 35, nullable: false),
-                    serviceHourRate = table.Column<decimal>(type: "decimal(2,1)", precision: 2, scale: 1, nullable: false)
+                    serviceHourRate = table.Column<decimal>(type: "decimal(2,1)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -87,29 +102,6 @@ namespace WrenchWorks.Data.WrenchWorksMigrations
                         column: x => x.supervisorID,
                         principalTable: "positions",
                         principalColumn: "positionID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "persons",
-                columns: table => new
-                {
-                    personID = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    firstName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    lastName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    telephoneNumber = table.Column<string>(type: "varchar(12)", unicode: false, maxLength: 12, nullable: false),
-                    email = table.Column<string>(type: "varchar(50)", unicode: false, maxLength: 50, nullable: true),
-                    addressID = table.Column<long>(type: "bigint", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_persons_personID", x => x.personID);
-                    table.ForeignKey(
-                        name: "definesPersonsAddress",
-                        column: x => x.addressID,
-                        principalTable: "addresses",
-                        principalColumn: "addressID",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -151,6 +143,30 @@ namespace WrenchWorks.Data.WrenchWorksMigrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "persons_addresses",
+                columns: table => new
+                {
+                    PersonId = table.Column<long>(type: "bigint", nullable: false),
+                    AddressId = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_persons_addresses", x => new { x.PersonId, x.AddressId });
+                    table.ForeignKey(
+                        name: "definesAddressesPerson",
+                        column: x => x.AddressId,
+                        principalTable: "addresses",
+                        principalColumn: "addressID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "definesPersonsAddress",
+                        column: x => x.PersonId,
+                        principalTable: "persons",
+                        principalColumn: "personID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "employees",
                 columns: table => new
                 {
@@ -181,8 +197,8 @@ namespace WrenchWorks.Data.WrenchWorksMigrations
                     maker = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     model = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     yearOfProduction = table.Column<DateTime>(type: "date", nullable: false),
-                    engineCapacity = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: true),
-                    PowerSource = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    engineCapacity = table.Column<decimal>(type: "decimal(2,1)", nullable: true),
+                    powerSource = table.Column<string>(type: "varchar(16)", unicode: false, maxLength: 16, nullable: false),
                     engineNo = table.Column<string>(type: "varchar(16)", unicode: false, maxLength: 16, nullable: true),
                     bodyColor = table.Column<string>(type: "varchar(16)", unicode: false, maxLength: 16, nullable: true),
                     personID = table.Column<long>(type: "bigint", nullable: true)
@@ -253,7 +269,7 @@ namespace WrenchWorks.Data.WrenchWorksMigrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     description = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    executionTime = table.Column<float>(type: "real", nullable: false),
+                    executionTime = table.Column<decimal>(type: "decimal(2,1)", nullable: false),
                     serviceID = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
@@ -313,58 +329,6 @@ namespace WrenchWorks.Data.WrenchWorksMigrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "bodyColors",
-                column: "bodyColor",
-                values: new object[]
-                {
-                    "Beige",
-                    "Black",
-                    "Blue",
-                    "Bronze",
-                    "Brown",
-                    "CUSTOM",
-                    "Gold",
-                    "Gray",
-                    "Green",
-                    "Orange",
-                    "Pink",
-                    "Purple",
-                    "Red",
-                    "Silver",
-                    "White",
-                    "Yellow"
-                });
-
-            migrationBuilder.InsertData(
-                table: "fuelTypes",
-                column: "fuelType",
-                values: new object[]
-                {
-                    "Diesel",
-                    "Electric",
-                    "Hydrogen",
-                    "Nuclear",
-                    "Petrol"
-                });
-
-            migrationBuilder.InsertData(
-                table: "positions",
-                columns: new[] { "positionID", "positionName", "serviceHourRate", "supervisorID" },
-                values: new object[,]
-                {
-                    { (short)0, "Owner", 1m, null },
-                    { (short)1, "Quality Engineer", 1m, (short)0 },
-                    { (short)2, "Parts Manager", 1m, (short)0 },
-                    { (short)3, "Workshop Manager", 1m, (short)0 },
-                    { (short)4, "Diagonostic Specialist", 0.6m, (short)3 },
-                    { (short)5, "Quality Specialist", 0.6m, (short)1 },
-                    { (short)6, "Automotive Specialist", 0.6m, (short)3 },
-                    { (short)9, "Trainee", 0m, (short)3 },
-                    { (short)7, "Assistant Diagonostic Specialist", 0.3m, (short)4 },
-                    { (short)8, "Assistant Automotive Specialist", 0.3m, (short)6 }
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_employees_positionName",
                 table: "employees",
@@ -378,9 +342,9 @@ namespace WrenchWorks.Data.WrenchWorksMigrations
                 filter: "[manufacturerArtNo] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_persons_addressID",
-                table: "persons",
-                column: "addressID");
+                name: "IX_persons_addresses_AddressId",
+                table: "persons_addresses",
+                column: "AddressId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_positions_supervisorID",
@@ -443,10 +407,16 @@ namespace WrenchWorks.Data.WrenchWorksMigrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "persons_addresses");
+
+            migrationBuilder.DropTable(
                 name: "tasks_employees");
 
             migrationBuilder.DropTable(
                 name: "tasks_parts");
+
+            migrationBuilder.DropTable(
+                name: "addresses");
 
             migrationBuilder.DropTable(
                 name: "parts");
@@ -477,9 +447,6 @@ namespace WrenchWorks.Data.WrenchWorksMigrations
 
             migrationBuilder.DropTable(
                 name: "powerSources");
-
-            migrationBuilder.DropTable(
-                name: "addresses");
 
             migrationBuilder.DropTable(
                 name: "fuelTypes");

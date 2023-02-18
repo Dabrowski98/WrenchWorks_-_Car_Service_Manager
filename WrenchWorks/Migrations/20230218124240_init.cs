@@ -60,8 +60,8 @@ namespace WrenchWorks.Migrations
                     partID = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     manufacturer = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    manufacturerArtNo = table.Column<long>(type: "bigint", nullable: true),
-                    partName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    manufacturerArtNo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    partName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     category = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     price = table.Column<decimal>(type: "money", nullable: false)
                 },
@@ -93,7 +93,7 @@ namespace WrenchWorks.Migrations
                     positionID = table.Column<short>(type: "smallint", nullable: false),
                     supervisorID = table.Column<short>(type: "smallint", nullable: true),
                     positionName = table.Column<string>(type: "nvarchar(35)", maxLength: 35, nullable: false),
-                    serviceHourRate = table.Column<decimal>(type: "decimal(2,1)", nullable: false)
+                    serviceHourRate = table.Column<decimal>(type: "decimal(10,2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -199,9 +199,9 @@ namespace WrenchWorks.Migrations
                     maker = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     model = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     yearOfProduction = table.Column<DateTime>(type: "date", nullable: false),
-                    engineCapacity = table.Column<decimal>(type: "decimal(2,1)", nullable: true),
+                    engineCapacity = table.Column<decimal>(type: "decimal(10,2)", nullable: true),
                     powerSource = table.Column<string>(type: "varchar(16)", unicode: false, maxLength: 16, nullable: false),
-                    engineNo = table.Column<string>(type: "varchar(16)", unicode: false, maxLength: 16, nullable: true),
+                    engineNo = table.Column<string>(type: "varchar(30)", unicode: false, maxLength: 30, nullable: true),
                     bodyColor = table.Column<string>(type: "varchar(16)", unicode: false, maxLength: 16, nullable: true),
                     personID = table.Column<long>(type: "bigint", nullable: true)
                 },
@@ -271,7 +271,7 @@ namespace WrenchWorks.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     description = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    executionTime = table.Column<decimal>(type: "decimal(2,1)", nullable: false),
+                    executionTime = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
                     serviceID = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>

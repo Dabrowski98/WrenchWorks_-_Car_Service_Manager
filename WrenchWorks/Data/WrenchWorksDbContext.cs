@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Azure.Identity;
 using Microsoft.EntityFrameworkCore;
 using WrenchWorks.Models;
+using WrenchWorks.SeedData;
 using WrenchWorks.Services;
 
 namespace WrenchWorks.Data;
@@ -170,9 +171,11 @@ public partial class WrenchWorksDbContext : DbContext
             entity.Property(e => e.Manufacturer)
                 .HasMaxLength(30)
                 .HasColumnName("manufacturer");
-            entity.Property(e => e.ManufacturerArtNo).HasColumnName("manufacturerArtNo");
+            entity.Property(e => e.ManufacturerArtNo).HasColumnName("manufacturerArtNo")
+                .HasMaxLength(50)
+                .IsUnicode(false);
             entity.Property(e => e.PartName)
-                .HasMaxLength(30)
+                .HasMaxLength(50)
                 .HasColumnName("partName");
             entity.Property(e => e.Price)
                 .HasColumnType("money")
@@ -235,7 +238,7 @@ public partial class WrenchWorksDbContext : DbContext
                 .HasMaxLength(35)
                 .HasColumnName("positionName");
             entity.Property(e => e.ServiceHourRate)
-                .HasColumnType("decimal(2, 1)")
+                .HasColumnType("decimal(10,2)")
                 .HasColumnName("serviceHourRate");
             entity.Property(e => e.SupervisorId).HasColumnName("supervisorID");
 
@@ -320,7 +323,7 @@ public partial class WrenchWorksDbContext : DbContext
                 .HasMaxLength(255)
                 .HasColumnName("description");
             entity.Property(e => e.ExecutionTime)
-                .HasColumnType("decimal(2, 1)")
+                .HasColumnType("decimal(10,2)")
                 .HasColumnName("executionTime");
             entity.Property(e => e.Name)
                 .HasMaxLength(50)
@@ -386,10 +389,10 @@ public partial class WrenchWorksDbContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("bodyColor");
             entity.Property(e => e.EngineCapacity)
-                .HasColumnType("decimal(2, 1)")
+                .HasColumnType("decimal(10,2)")
                 .HasColumnName("engineCapacity");
             entity.Property(e => e.EngineNo)
-                .HasMaxLength(16)
+                .HasMaxLength(30)
                 .IsUnicode(false)
                 .HasColumnName("engineNo");
             entity.Property(e => e.Maker)
@@ -421,45 +424,11 @@ public partial class WrenchWorksDbContext : DbContext
                 .HasConstraintName("vehicleHasPowerSources");
         });
         
-        modelBuilder.Entity<Position>().HasData(
-            new Position { PositionId = 9, SupervisorId = 3, PositionName = "Trainee", ServiceHourRate = (decimal)0.0},
-            new Position { PositionId = 7, SupervisorId = 4, PositionName = "Assistant Diagonostic Specialist", ServiceHourRate = (decimal)0.3},
-            new Position { PositionId = 8, SupervisorId = 6, PositionName = "Assistant Automotive Specialist", ServiceHourRate = (decimal)0.3},
-            new Position { PositionId = 6, SupervisorId = 3, PositionName = "Automotive Specialist", ServiceHourRate = (decimal)0.6},
-            new Position { PositionId = 4, SupervisorId = 3, PositionName = "Diagonostic Specialist", ServiceHourRate = (decimal)0.6},
-            new Position { PositionId = 5, SupervisorId = 1, PositionName = "Quality Specialist", ServiceHourRate = (decimal)0.6},
-            new Position { PositionId = 3, SupervisorId = 0, PositionName = "Workshop Manager", ServiceHourRate = 1},
-            new Position { PositionId = 2, SupervisorId = 0, PositionName = "Parts Manager", ServiceHourRate = 1},
-            new Position { PositionId = 1, SupervisorId = 0, PositionName = "Quality Engineer", ServiceHourRate = 1},
-            new Position { PositionId = 0, SupervisorId = null, PositionName = "Owner", ServiceHourRate = 1}
-        );
         
-        modelBuilder.Entity<FuelType>().HasData(
-            new FuelType { Fuel = "Petrol" },
-            new FuelType { Fuel = "Diesel" },
-            new FuelType { Fuel = "Electric" },
-            new FuelType { Fuel = "Hydrogen" },
-            new FuelType { Fuel = "Nuclear" }
-        );
-        modelBuilder.Entity<BodyColor>().HasData(
-            new BodyColor { Color = "Red" },
-            new BodyColor { Color = "Blue" },
-            new BodyColor { Color = "Green" },
-            new BodyColor { Color = "Yellow" },
-            new BodyColor { Color = "Orange" },
-            new BodyColor { Color = "Black" },
-            new BodyColor { Color = "White" },
-            new BodyColor { Color = "Silver" },
-            new BodyColor { Color = "Gray" },
-            new BodyColor { Color = "Gold" },
-            new BodyColor { Color = "Brown" },
-            new BodyColor { Color = "Purple" },
-            new BodyColor { Color = "Bronze" },
-            new BodyColor { Color = "Pink" },
-            new BodyColor { Color = "Beige" },
-            new BodyColor { Color = "CUSTOM" }
-        );
-        //TODO: SEED DATA
+        
+        
+        BruteForceSeed.bfSeedData(modelBuilder);
+        //TODO: SEED DATA FROM CSV
         //CSVSeed.addSeedData("fileAddresses.csv",modelBuilder);
         //CSVSeed.addSeedData("filePersons.csv",modelBuilder);
         

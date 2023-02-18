@@ -9,7 +9,7 @@ public partial class Part
 
     public string Manufacturer { get; set; } = null!;
 
-    public long? ManufacturerArtNo { get; set; }
+    public string? ManufacturerArtNo { get; set; }
 
     public string PartName { get; set; } = null!;
 

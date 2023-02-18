@@ -258,14 +258,15 @@ namespace WrenchWorks.Migrations
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("manufacturer");
 
-                    b.Property<long?>("ManufacturerArtNo")
-                        .HasColumnType("bigint")
+                    b.Property<string?>("ManufacturerArtNo")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50)
                         .HasColumnName("manufacturerArtNo");
 
                     b.Property<string>("PartName")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
                         .HasColumnName("partName");
 
                     b.Property<decimal>("Price")
@@ -352,7 +353,7 @@ namespace WrenchWorks.Migrations
                         .HasColumnName("positionName");
 
                     b.Property<decimal>("ServiceHourRate")
-                        .HasColumnType("decimal(2, 1)")
+                        .HasColumnType("decimal(10,2)")
                         .HasColumnName("serviceHourRate");
 
                     b.Property<short?>("SupervisorId")
@@ -547,7 +548,7 @@ namespace WrenchWorks.Migrations
                         .HasColumnName("description");
 
                     b.Property<decimal>("ExecutionTime")
-                        .HasColumnType("decimal(2, 1)")
+                        .HasColumnType("decimal(10,2)")
                         .HasColumnName("executionTime");
 
                     b.Property<string>("Name")
@@ -618,13 +619,13 @@ namespace WrenchWorks.Migrations
                         .HasColumnName("bodyColor");
 
                     b.Property<decimal?>("EngineCapacity")
-                        .HasColumnType("decimal(2, 1)")
+                        .HasColumnType("decimal(10,2)")
                         .HasColumnName("engineCapacity");
 
                     b.Property<string>("EngineNo")
-                        .HasMaxLength(16)
+                        .HasMaxLength(30)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(16)")
+                        .HasColumnType("varchar(30)")
                         .HasColumnName("engineNo");
 
                     b.Property<string>("Maker")

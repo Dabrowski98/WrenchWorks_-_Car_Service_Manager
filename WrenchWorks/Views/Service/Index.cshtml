@@ -1,0 +1,80 @@
+@model IEnumerable<WrenchWorks.Models.Service>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Services Manager</h1>
+
+<h5>
+    <a asp-action="Create">Create New</a>
+</h5>
+<table class="table">
+    <thead>
+    <tr class="table-primary">
+        <th>
+            Service
+        </th>
+
+        <th>
+            Start date
+        </th>
+        <th>
+            End date
+        </th>
+        <th>
+            Customer
+        </th>
+        <th>
+            Employee
+        </th>
+        <th>
+            VIN
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PaidOff)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ServiceId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ServiceStartDate.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ServiceEndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Customer.CustomerId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Employee.EmployeeId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VinNavigation.Vin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PaidOff)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ServiceId">
+                    <button type="button" class="btn btn-outline-warning">Edit</button>
+                </a>
+                <a asp-action="Details" asp-route-id="@item.ServiceId">
+                    <button type="button" class="btn btn-outline-info">Details</button>
+                </a>
+                <a asp-action="Delete" asp-route-id="@item.ServiceId">
+                    <button type="button" class="btn btn-outline-danger">Delete</button>
+                </a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

@@ -1,0 +1,61 @@
+@model IEnumerable<WrenchWorks.Models.Person>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Persons Manager</h1>
+
+<h5>
+    <a asp-action="Create">Create New</a>
+</h5>
+<table class="table">
+    <thead>
+    <tr class="table-primary">
+        <th>
+            First name
+        </th>
+        <th>
+            Last name
+        </th>
+        <th>
+            Phone
+        </th>
+        <th>
+            Email
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TelephoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.PersonId">
+                    <button type="button" class="btn btn-outline-warning">Edit</button>
+                </a>
+                <a asp-action="Details" asp-route-id="@item.PersonId">
+                    <button type="button" class="btn btn-outline-info">Details</button>
+                </a>
+                <a asp-action="Delete" asp-route-id="@item.PersonId">
+                    <button type="button" class="btn btn-outline-danger">Delete</button>
+                </a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

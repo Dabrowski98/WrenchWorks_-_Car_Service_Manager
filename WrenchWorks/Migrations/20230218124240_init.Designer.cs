@@ -258,7 +258,7 @@ namespace WrenchWorks.Migrations
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("manufacturer");
 
-                    b.Property<string?>("ManufacturerArtNo")
+                    b.Property<string>("ManufacturerArtNo")
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50)
                         .HasColumnName("manufacturerArtNo");

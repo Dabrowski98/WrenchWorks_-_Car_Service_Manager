@@ -1,0 +1,67 @@
+@model WrenchWorks.Models.Vehicle
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>Vehicle</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Vin" />
+            <div class="form-group">
+                <label asp-for="Maker" class="control-label"></label>
+                <input asp-for="Maker" class="form-control" />
+                <span asp-validation-for="Maker" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Model" class="control-label"></label>
+                <input asp-for="Model" class="form-control" />
+                <span asp-validation-for="Model" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="YearOfProduction" class="control-label"></label>
+                <input asp-for="YearOfProduction" class="form-control" />
+                <span asp-validation-for="YearOfProduction" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EngineCapacity" class="control-label"></label>
+                <input asp-for="EngineCapacity" class="form-control" />
+                <span asp-validation-for="EngineCapacity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PowerSource" class="control-label"></label>
+                <input asp-for="PowerSource" class="form-control" />
+                <span asp-validation-for="PowerSource" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EngineNo" class="control-label"></label>
+                <input asp-for="EngineNo" class="form-control" />
+                <span asp-validation-for="EngineNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BodyColor" class="control-label"></label>
+                <select asp-for="BodyColor" class="form-control" asp-items="ViewBag.BodyColor"></select>
+                <span asp-validation-for="BodyColor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PersonId" class="control-label"></label>
+                <select asp-for="PersonId" class="form-control" asp-items="ViewBag.PersonId"></select>
+                <span asp-validation-for="PersonId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

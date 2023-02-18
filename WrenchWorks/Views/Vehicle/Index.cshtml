@@ -1,0 +1,67 @@
+@model IEnumerable<WrenchWorks.Models.Vehicle>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Vehicles Manager</h1>
+
+<h5>
+    <a asp-action="Create">Create New</a>
+</h5>
+<table class="table">
+    <thead>
+    <tr class="table-primary">
+        <th>
+            Owner id
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Maker)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Model)
+        </th>
+        <th>
+            Year of production
+        </th>
+        <th>
+            Body Color
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Person.PersonId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Maker)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Model)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.YearOfProduction.Year)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BodyColorNavigation.Color)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Vin">
+                    <button type="button" class="btn btn-outline-warning">Edit</button>
+                </a>
+                <a asp-action="Details" asp-route-id="@item.Vin">
+                    <button type="button" class="btn btn-outline-info">Details</button>
+                </a>
+                <a asp-action="Delete" asp-route-id="@item.Vin">
+                    <button type="button" class="btn btn-outline-danger">Delete</button>
+                </a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

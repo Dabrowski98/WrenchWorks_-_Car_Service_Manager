@@ -12,7 +12,7 @@ using WrenchWorks.Data;
 namespace WrenchWorks.Migrations
 {
     [DbContext(typeof(WrenchWorksDbContext))]
-    [Migration("20230218121841_init")]
+    [Migration("20230218124240_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -24,51 +24,6 @@ namespace WrenchWorks.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("PersonsAddress", b =>
-                {
-                    b.Property<long>("PersonId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("AddressId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("PersonId", "AddressId");
-
-                    b.HasIndex("AddressId");
-
-                    b.ToTable("persons_addresses", (string)null);
-                });
-
-            modelBuilder.Entity("TasksEmployee", b =>
-                {
-                    b.Property<long>("EmployeeId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("TaskId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("EmployeeId", "TaskId");
-
-                    b.HasIndex("TaskId");
-
-                    b.ToTable("tasks_employees", (string)null);
-                });
-
-            modelBuilder.Entity("TasksPart", b =>
-                {
-                    b.Property<long>("PartId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("TaskId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("PartId", "TaskId");
-
-                    b.HasIndex("TaskId");
-
-                    b.ToTable("tasks_parts", (string)null);
-                });
 
             modelBuilder.Entity("WrenchWorks.Models.Address", b =>
                 {
@@ -134,6 +89,72 @@ namespace WrenchWorks.Migrations
                         .HasName("PK_bodyColors_color");
 
                     b.ToTable("bodyColors", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Color = "Red"
+                        },
+                        new
+                        {
+                            Color = "Blue"
+                        },
+                        new
+                        {
+                            Color = "Green"
+                        },
+                        new
+                        {
+                            Color = "Yellow"
+                        },
+                        new
+                        {
+                            Color = "Orange"
+                        },
+                        new
+                        {
+                            Color = "Black"
+                        },
+                        new
+                        {
+                            Color = "White"
+                        },
+                        new
+                        {
+                            Color = "Silver"
+                        },
+                        new
+                        {
+                            Color = "Gray"
+                        },
+                        new
+                        {
+                            Color = "Gold"
+                        },
+                        new
+                        {
+                            Color = "Brown"
+                        },
+                        new
+                        {
+                            Color = "Purple"
+                        },
+                        new
+                        {
+                            Color = "Bronze"
+                        },
+                        new
+                        {
+                            Color = "Pink"
+                        },
+                        new
+                        {
+                            Color = "Beige"
+                        },
+                        new
+                        {
+                            Color = "CUSTOM"
+                        });
                 });
 
             modelBuilder.Entity("WrenchWorks.Models.Customer", b =>
@@ -189,9 +210,31 @@ namespace WrenchWorks.Migrations
                         .HasColumnName("fuel");
 
                     b.HasKey("Fuel")
-                        .HasName("PK_fuelTypes_fuel");
+                        .HasName("PK_fuelTypes_Fuel");
 
                     b.ToTable("fuelTypes", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Fuel = "Petrol"
+                        },
+                        new
+                        {
+                            Fuel = "Diesel"
+                        },
+                        new
+                        {
+                            Fuel = "Electric"
+                        },
+                        new
+                        {
+                            Fuel = "Hydrogen"
+                        },
+                        new
+                        {
+                            Fuel = "Nuclear"
+                        });
                 });
 
             modelBuilder.Entity("WrenchWorks.Models.Part", b =>
@@ -279,6 +322,23 @@ namespace WrenchWorks.Migrations
                     b.ToTable("persons", (string)null);
                 });
 
+            modelBuilder.Entity("WrenchWorks.Models.PersonsAddress", b =>
+                {
+                    b.Property<long>("PersonId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("personID");
+
+                    b.Property<long>("AddressId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("addressID");
+
+                    b.HasKey("PersonId", "AddressId");
+
+                    b.HasIndex("AddressId");
+
+                    b.ToTable("persons_addresses", (string)null);
+                });
+
             modelBuilder.Entity("WrenchWorks.Models.Position", b =>
                 {
                     b.Property<short>("PositionId")
@@ -308,6 +368,77 @@ namespace WrenchWorks.Migrations
                         .IsUnique();
 
                     b.ToTable("positions", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            PositionId = (short)9,
+                            PositionName = "Trainee",
+                            ServiceHourRate = 0m,
+                            SupervisorId = (short)3
+                        },
+                        new
+                        {
+                            PositionId = (short)7,
+                            PositionName = "Assistant Diagonostic Specialist",
+                            ServiceHourRate = 0.3m,
+                            SupervisorId = (short)4
+                        },
+                        new
+                        {
+                            PositionId = (short)8,
+                            PositionName = "Assistant Automotive Specialist",
+                            ServiceHourRate = 0.3m,
+                            SupervisorId = (short)6
+                        },
+                        new
+                        {
+                            PositionId = (short)6,
+                            PositionName = "Automotive Specialist",
+                            ServiceHourRate = 0.6m,
+                            SupervisorId = (short)3
+                        },
+                        new
+                        {
+                            PositionId = (short)4,
+                            PositionName = "Diagonostic Specialist",
+                            ServiceHourRate = 0.6m,
+                            SupervisorId = (short)3
+                        },
+                        new
+                        {
+                            PositionId = (short)5,
+                            PositionName = "Quality Specialist",
+                            ServiceHourRate = 0.6m,
+                            SupervisorId = (short)1
+                        },
+                        new
+                        {
+                            PositionId = (short)3,
+                            PositionName = "Workshop Manager",
+                            ServiceHourRate = 1m,
+                            SupervisorId = (short)0
+                        },
+                        new
+                        {
+                            PositionId = (short)2,
+                            PositionName = "Parts Manager",
+                            ServiceHourRate = 1m,
+                            SupervisorId = (short)0
+                        },
+                        new
+                        {
+                            PositionId = (short)1,
+                            PositionName = "Quality Engineer",
+                            ServiceHourRate = 1m,
+                            SupervisorId = (short)0
+                        },
+                        new
+                        {
+                            PositionId = (short)0,
+                            PositionName = "Owner",
+                            ServiceHourRate = 1m
+                        });
                 });
 
             modelBuilder.Entity("WrenchWorks.Models.PowerSource", b =>
@@ -437,6 +568,40 @@ namespace WrenchWorks.Migrations
                     b.ToTable("tasks", (string)null);
                 });
 
+            modelBuilder.Entity("WrenchWorks.Models.TasksEmployee", b =>
+                {
+                    b.Property<long>("EmployeeId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("employeeID");
+
+                    b.Property<long>("TaskId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("taskID");
+
+                    b.HasKey("EmployeeId", "TaskId");
+
+                    b.HasIndex("TaskId");
+
+                    b.ToTable("tasks_employees", (string)null);
+                });
+
+            modelBuilder.Entity("WrenchWorks.Models.TasksPart", b =>
+                {
+                    b.Property<long>("PartId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("partID");
+
+                    b.Property<long>("TaskId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("taskID");
+
+                    b.HasKey("PartId", "TaskId");
+
+                    b.HasIndex("TaskId");
+
+                    b.ToTable("tasks_parts", (string)null);
+                });
+
             modelBuilder.Entity("WrenchWorks.Models.Vehicle", b =>
                 {
                     b.Property<string>("Vin")
@@ -499,56 +664,6 @@ namespace WrenchWorks.Migrations
                     b.ToTable("vehicles", (string)null);
                 });
 
-            modelBuilder.Entity("PersonsAddress", b =>
-                {
-                    b.HasOne("WrenchWorks.Models.Address", null)
-                        .WithMany()
-                        .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("definesAddressesPerson");
-
-                    b.HasOne("WrenchWorks.Models.Person", null)
-                        .WithMany()
-                        .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("definesPersonsAddress");
-                });
-
-            modelBuilder.Entity("TasksEmployee", b =>
-                {
-                    b.HasOne("WrenchWorks.Models.Employee", null)
-                        .WithMany()
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("definesEmployeeTask");
-
-                    b.HasOne("WrenchWorks.Models.Task", null)
-                        .WithMany()
-                        .HasForeignKey("TaskId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("definesTaskEmployee");
-                });
-
-            modelBuilder.Entity("TasksPart", b =>
-                {
-                    b.HasOne("WrenchWorks.Models.Part", null)
-                        .WithMany()
-                        .HasForeignKey("PartId")
-                        .IsRequired()
-                        .HasConstraintName("definesPartTask");
-
-                    b.HasOne("WrenchWorks.Models.Task", null)
-                        .WithMany()
-                        .HasForeignKey("TaskId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("definesTaskPart");
-                });
-
             modelBuilder.Entity("WrenchWorks.Models.Customer", b =>
                 {
                     b.HasOne("WrenchWorks.Models.Person", "CustomerNavigation")
@@ -578,6 +693,27 @@ namespace WrenchWorks.Migrations
                     b.Navigation("EmployeeNavigation");
 
                     b.Navigation("PositionNameNavigation");
+                });
+
+            modelBuilder.Entity("WrenchWorks.Models.PersonsAddress", b =>
+                {
+                    b.HasOne("WrenchWorks.Models.Address", "Address")
+                        .WithMany("PersonsAddresses")
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("definesAddressesPerson");
+
+                    b.HasOne("WrenchWorks.Models.Person", "Person")
+                        .WithMany("PersonsAddresses")
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("definesPersonsAddress");
+
+                    b.Navigation("Address");
+
+                    b.Navigation("Person");
                 });
 
             modelBuilder.Entity("WrenchWorks.Models.Position", b =>
@@ -639,6 +775,47 @@ namespace WrenchWorks.Migrations
                     b.Navigation("Service");
                 });
 
+            modelBuilder.Entity("WrenchWorks.Models.TasksEmployee", b =>
+                {
+                    b.HasOne("WrenchWorks.Models.Employee", "Employee")
+                        .WithMany("TasksEmployees")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("definesEmployeeTask");
+
+                    b.HasOne("WrenchWorks.Models.Task", "Task")
+                        .WithMany("TasksEmployees")
+                        .HasForeignKey("TaskId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("definesTaskEmployee");
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Task");
+                });
+
+            modelBuilder.Entity("WrenchWorks.Models.TasksPart", b =>
+                {
+                    b.HasOne("WrenchWorks.Models.Part", "Part")
+                        .WithMany("TasksParts")
+                        .HasForeignKey("PartId")
+                        .IsRequired()
+                        .HasConstraintName("definesPartTask");
+
+                    b.HasOne("WrenchWorks.Models.Task", "Task")
+                        .WithMany("TasksParts")
+                        .HasForeignKey("TaskId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("definesTaskPart");
+
+                    b.Navigation("Part");
+
+                    b.Navigation("Task");
+                });
+
             modelBuilder.Entity("WrenchWorks.Models.Vehicle", b =>
                 {
                     b.HasOne("WrenchWorks.Models.BodyColor", "BodyColorNavigation")
@@ -666,6 +843,11 @@ namespace WrenchWorks.Migrations
                     b.Navigation("VinNavigation");
                 });
 
+            modelBuilder.Entity("WrenchWorks.Models.Address", b =>
+                {
+                    b.Navigation("PersonsAddresses");
+                });
+
             modelBuilder.Entity("WrenchWorks.Models.BodyColor", b =>
                 {
                     b.Navigation("Vehicles");
@@ -679,6 +861,8 @@ namespace WrenchWorks.Migrations
             modelBuilder.Entity("WrenchWorks.Models.Employee", b =>
                 {
                     b.Navigation("Services");
+
+                    b.Navigation("TasksEmployees");
                 });
 
             modelBuilder.Entity("WrenchWorks.Models.FuelType", b =>
@@ -686,11 +870,18 @@ namespace WrenchWorks.Migrations
                     b.Navigation("PowerSources");
                 });
 
+            modelBuilder.Entity("WrenchWorks.Models.Part", b =>
+                {
+                    b.Navigation("TasksParts");
+                });
+
             modelBuilder.Entity("WrenchWorks.Models.Person", b =>
                 {
                     b.Navigation("Customer");
 
                     b.Navigation("Employee");
+
+                    b.Navigation("PersonsAddresses");
 
                     b.Navigation("Vehicles");
                 });
@@ -710,6 +901,13 @@ namespace WrenchWorks.Migrations
             modelBuilder.Entity("WrenchWorks.Models.Service", b =>
                 {
                     b.Navigation("Tasks");
+                });
+
+            modelBuilder.Entity("WrenchWorks.Models.Task", b =>
+                {
+                    b.Navigation("TasksEmployees");
+
+                    b.Navigation("TasksParts");
                 });
 
             modelBuilder.Entity("WrenchWorks.Models.Vehicle", b =>

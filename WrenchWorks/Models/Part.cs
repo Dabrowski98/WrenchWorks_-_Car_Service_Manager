@@ -17,5 +17,5 @@ public partial class Part
 
     public decimal Price { get; set; }
 
-    public virtual ICollection<Task> Tasks { get; } = new List<Task>();
+    public virtual ICollection<TasksPart> TasksParts { get; } = new List<TasksPart>();
 }

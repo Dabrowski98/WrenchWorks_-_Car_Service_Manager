@@ -19,7 +19,7 @@ public partial class Person
 
     public virtual Employee? Employee { get; set; }
 
-    public virtual ICollection<Vehicle> Vehicles { get; } = new List<Vehicle>();
+    public virtual ICollection<PersonsAddress> PersonsAddresses { get; } = new List<PersonsAddress>();
 
-    public virtual ICollection<Address> Addresses { get; } = new List<Address>();
+    public virtual ICollection<Vehicle> Vehicles { get; } = new List<Vehicle>();
 }

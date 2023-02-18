@@ -17,5 +17,5 @@ public partial class Employee
 
     public virtual ICollection<Service> Services { get; } = new List<Service>();
 
-    public virtual ICollection<Task> Tasks { get; } = new List<Task>();
+    public virtual ICollection<TasksEmployee> TasksEmployees { get; } = new List<TasksEmployee>();
 }

@@ -19,5 +19,5 @@ public partial class Address
 
     public string PostCode { get; set; } = null!;
 
-    public virtual ICollection<Person> People { get; } = new List<Person>();
+    public virtual ICollection<PersonsAddress> PersonsAddresses { get; } = new List<PersonsAddress>();
 }

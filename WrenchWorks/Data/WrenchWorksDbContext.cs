@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Azure.Identity;
 using Microsoft.EntityFrameworkCore;
 using WrenchWorks.Models;
 using WrenchWorks.Services;
@@ -31,6 +32,8 @@ public partial class WrenchWorksDbContext : DbContext
 
     public virtual DbSet<Person> Persons { get; set; }
 
+    public virtual DbSet<PersonsAddress> PersonsAddresses { get; set; }
+
     public virtual DbSet<Position> Positions { get; set; }
 
     public virtual DbSet<PowerSource> PowerSources { get; set; }
@@ -39,11 +42,13 @@ public partial class WrenchWorksDbContext : DbContext
 
     public virtual DbSet<Models.Task> Tasks { get; set; }
 
+    public virtual DbSet<TasksEmployee> TasksEmployees { get; set; }
+
+    public virtual DbSet<TasksPart> TasksParts { get; set; }
+
     public virtual DbSet<Vehicle> Vehicles { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=DESKTOP-7UTOM62;Database=WrenchWorksDB;Trusted_Connection=true;Trust Server Certificate=true;");
+    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -136,26 +141,11 @@ public partial class WrenchWorksDbContext : DbContext
                 .HasForeignKey(d => d.PositionName)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("employeeWorksOnPosition");
-
-            entity.HasMany(d => d.Tasks).WithMany(p => p.Employees)
-                .UsingEntity<Dictionary<string, object>>(
-                    "TasksEmployee",
-                    r => r.HasOne<Models.Task>().WithMany()
-                        .HasForeignKey("TaskId")
-                        .HasConstraintName("definesTaskEmployee"),
-                    l => l.HasOne<Employee>().WithMany()
-                        .HasForeignKey("EmployeeId")
-                        .HasConstraintName("definesEmployeeTask"),
-                    j =>
-                    {
-                        j.HasKey("EmployeeId", "TaskId");
-                        j.ToTable("tasks_employees");
-                    });
         });
 
         modelBuilder.Entity<FuelType>(entity =>
         {
-            entity.HasKey(e => e.Fuel).HasName("PK_fuelTypes_fuelType");
+            entity.HasKey(e => e.Fuel).HasName("PK_fuelTypes_Fuel");
 
             entity.ToTable("fuelTypes");
 
@@ -187,22 +177,6 @@ public partial class WrenchWorksDbContext : DbContext
             entity.Property(e => e.Price)
                 .HasColumnType("money")
                 .HasColumnName("price");
-
-            entity.HasMany(d => d.Tasks).WithMany(p => p.Parts)
-                .UsingEntity<Dictionary<string, object>>(
-                    "TasksPart",
-                    r => r.HasOne<Models.Task>().WithMany()
-                        .HasForeignKey("TaskId")
-                        .HasConstraintName("definesTaskPart"),
-                    l => l.HasOne<Part>().WithMany()
-                        .HasForeignKey("PartId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("definesPartTask"),
-                    j =>
-                    {
-                        j.HasKey("PartId", "TaskId");
-                        j.ToTable("tasks_parts");
-                    });
         });
 
         modelBuilder.Entity<Person>(entity =>
@@ -226,21 +200,24 @@ public partial class WrenchWorksDbContext : DbContext
                 .HasMaxLength(12)
                 .IsUnicode(false)
                 .HasColumnName("telephoneNumber");
+        });
 
-            entity.HasMany(d => d.Addresses).WithMany(p => p.People)
-                .UsingEntity<Dictionary<string, object>>(
-                    "PersonsAddress",
-                    r => r.HasOne<Address>().WithMany()
-                        .HasForeignKey("AddressId")
-                        .HasConstraintName("definesAddressesPerson"),
-                    l => l.HasOne<Person>().WithMany()
-                        .HasForeignKey("PersonId")
-                        .HasConstraintName("definesPersonsAddress"),
-                    j =>
-                    {
-                        j.HasKey("PersonId", "AddressId");
-                        j.ToTable("persons_addresses");
-                    });
+        modelBuilder.Entity<PersonsAddress>(entity =>
+        {
+            entity.HasKey(e => new { e.PersonId, e.AddressId });
+
+            entity.ToTable("persons_addresses");
+
+            entity.Property(e => e.PersonId).HasColumnName("personID");
+            entity.Property(e => e.AddressId).HasColumnName("addressID");
+
+            entity.HasOne(d => d.Address).WithMany(p => p.PersonsAddresses)
+                .HasForeignKey(d => d.AddressId)
+                .HasConstraintName("definesAddressesPerson");
+
+            entity.HasOne(d => d.Person).WithMany(p => p.PersonsAddresses)
+                .HasForeignKey(d => d.PersonId)
+                .HasConstraintName("definesPersonsAddress");
         });
 
         modelBuilder.Entity<Position>(entity =>
@@ -356,6 +333,43 @@ public partial class WrenchWorksDbContext : DbContext
                 .HasConstraintName("serviceConsistsOfTasks");
         });
 
+        modelBuilder.Entity<TasksEmployee>(entity =>
+        {
+            entity.HasKey(e => new { e.EmployeeId, e.TaskId });
+
+            entity.ToTable("tasks_employees");
+
+            entity.Property(e => e.EmployeeId).HasColumnName("employeeID");
+            entity.Property(e => e.TaskId).HasColumnName("taskID");
+
+            entity.HasOne(d => d.Employee).WithMany(p => p.TasksEmployees)
+                .HasForeignKey(d => d.EmployeeId)
+                .HasConstraintName("definesEmployeeTask");
+
+            entity.HasOne(d => d.Task).WithMany(p => p.TasksEmployees)
+                .HasForeignKey(d => d.TaskId)
+                .HasConstraintName("definesTaskEmployee");
+        });
+
+        modelBuilder.Entity<TasksPart>(entity =>
+        {
+            entity.HasKey(e => new { e.PartId, e.TaskId });
+
+            entity.ToTable("tasks_parts");
+
+            entity.Property(e => e.PartId).HasColumnName("partID");
+            entity.Property(e => e.TaskId).HasColumnName("taskID");
+
+            entity.HasOne(d => d.Part).WithMany(p => p.TasksParts)
+                .HasForeignKey(d => d.PartId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("definesPartTask");
+
+            entity.HasOne(d => d.Task).WithMany(p => p.TasksParts)
+                .HasForeignKey(d => d.TaskId)
+                .HasConstraintName("definesTaskPart");
+        });
+
         modelBuilder.Entity<Vehicle>(entity =>
         {
             entity.HasKey(e => e.Vin).HasName("PK_vehicles_VIN");
@@ -445,10 +459,10 @@ public partial class WrenchWorksDbContext : DbContext
             new BodyColor { Color = "Beige" },
             new BodyColor { Color = "CUSTOM" }
         );
+        //TODO: SEED DATA
+        //CSVSeed.addSeedData("fileAddresses.csv",modelBuilder);
+        //CSVSeed.addSeedData("filePersons.csv",modelBuilder);
         
-        CSVSeed.addSeedData("fileAddresses.csv",modelBuilder);
-        CSVSeed.addSeedData("filePersons.csv",modelBuilder);
-
         OnModelCreatingPartial(modelBuilder);
     }
 

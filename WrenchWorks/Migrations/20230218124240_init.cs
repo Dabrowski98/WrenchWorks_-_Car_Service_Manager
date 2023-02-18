@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace WrenchWorks.Migrations
 {
     /// <inheritdoc />
@@ -33,22 +35,22 @@ namespace WrenchWorks.Migrations
                 name: "bodyColors",
                 columns: table => new
                 {
-                    bodyColor = table.Column<string>(type: "varchar(16)", unicode: false, maxLength: 16, nullable: false)
+                    color = table.Column<string>(type: "varchar(16)", unicode: false, maxLength: 16, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_bodyColors_bodyColor", x => x.bodyColor);
+                    table.PrimaryKey("PK_bodyColors_color", x => x.color);
                 });
 
             migrationBuilder.CreateTable(
                 name: "fuelTypes",
                 columns: table => new
                 {
-                    fuelType = table.Column<string>(type: "varchar(16)", unicode: false, maxLength: 16, nullable: false)
+                    fuel = table.Column<string>(type: "varchar(16)", unicode: false, maxLength: 16, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_fuelTypes_fuelType", x => x.fuelType);
+                    table.PrimaryKey("PK_fuelTypes_Fuel", x => x.fuel);
                 });
 
             migrationBuilder.CreateTable(
@@ -122,7 +124,7 @@ namespace WrenchWorks.Migrations
                         name: "powerSourceType",
                         column: x => x.mainPowerSourceType,
                         principalTable: "fuelTypes",
-                        principalColumn: "fuelType");
+                        principalColumn: "fuel");
                 });
 
             migrationBuilder.CreateTable(
@@ -146,21 +148,21 @@ namespace WrenchWorks.Migrations
                 name: "persons_addresses",
                 columns: table => new
                 {
-                    PersonId = table.Column<long>(type: "bigint", nullable: false),
-                    AddressId = table.Column<long>(type: "bigint", nullable: false)
+                    personID = table.Column<long>(type: "bigint", nullable: false),
+                    addressID = table.Column<long>(type: "bigint", nullable: false),
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_persons_addresses", x => new { x.PersonId, x.AddressId });
+                    table.PrimaryKey("PK_persons_addresses", x => new { x.personID, x.addressID });
                     table.ForeignKey(
                         name: "definesAddressesPerson",
-                        column: x => x.AddressId,
+                        column: x => x.addressID,
                         principalTable: "addresses",
                         principalColumn: "addressID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "definesPersonsAddress",
-                        column: x => x.PersonId,
+                        column: x => x.personID,
                         principalTable: "persons",
                         principalColumn: "personID",
                         onDelete: ReferentialAction.Cascade);
@@ -216,7 +218,7 @@ namespace WrenchWorks.Migrations
                         name: "vehicleHasBodyColor",
                         column: x => x.bodyColor,
                         principalTable: "bodyColors",
-                        principalColumn: "bodyColor");
+                        principalColumn: "color");
                     table.ForeignKey(
                         name: "vehicleHasPowerSources",
                         column: x => x.VIN,
@@ -286,21 +288,21 @@ namespace WrenchWorks.Migrations
                 name: "tasks_employees",
                 columns: table => new
                 {
-                    EmployeeId = table.Column<long>(type: "bigint", nullable: false),
-                    TaskId = table.Column<long>(type: "bigint", nullable: false)
+                    employeeID = table.Column<long>(type: "bigint", nullable: false),
+                    taskID = table.Column<long>(type: "bigint", nullable: false),
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tasks_employees", x => new { x.EmployeeId, x.TaskId });
+                    table.PrimaryKey("PK_tasks_employees", x => new { x.employeeID, x.taskID });
                     table.ForeignKey(
                         name: "definesEmployeeTask",
-                        column: x => x.EmployeeId,
+                        column: x => x.employeeID,
                         principalTable: "employees",
                         principalColumn: "employeeID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "definesTaskEmployee",
-                        column: x => x.TaskId,
+                        column: x => x.taskID,
                         principalTable: "tasks",
                         principalColumn: "taskID",
                         onDelete: ReferentialAction.Cascade);
@@ -310,23 +312,75 @@ namespace WrenchWorks.Migrations
                 name: "tasks_parts",
                 columns: table => new
                 {
-                    PartId = table.Column<long>(type: "bigint", nullable: false),
-                    TaskId = table.Column<long>(type: "bigint", nullable: false)
+                    taskID = table.Column<long>(type: "bigint", nullable: false),
+                    partID = table.Column<long>(type: "bigint", nullable: false),
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tasks_parts", x => new { x.PartId, x.TaskId });
+                    table.PrimaryKey("PK_tasks_parts", x => new { x.partID, x.taskID });
                     table.ForeignKey(
                         name: "definesPartTask",
-                        column: x => x.PartId,
+                        column: x => x.partID,
                         principalTable: "parts",
                         principalColumn: "partID");
                     table.ForeignKey(
                         name: "definesTaskPart",
-                        column: x => x.TaskId,
+                        column: x => x.taskID,
                         principalTable: "tasks",
                         principalColumn: "taskID",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "bodyColors",
+                column: "color",
+                values: new object[]
+                {
+                    "Beige",
+                    "Black",
+                    "Blue",
+                    "Bronze",
+                    "Brown",
+                    "CUSTOM",
+                    "Gold",
+                    "Gray",
+                    "Green",
+                    "Orange",
+                    "Pink",
+                    "Purple",
+                    "Red",
+                    "Silver",
+                    "White",
+                    "Yellow"
+                });
+
+            migrationBuilder.InsertData(
+                table: "fuelTypes",
+                column: "fuel",
+                values: new object[]
+                {
+                    "Diesel",
+                    "Electric",
+                    "Hydrogen",
+                    "Nuclear",
+                    "Petrol"
+                });
+
+            migrationBuilder.InsertData(
+                table: "positions",
+                columns: new[] { "positionID", "positionName", "serviceHourRate", "supervisorID" },
+                values: new object[,]
+                {
+                    { (short)0, "Owner", 1m, null },
+                    { (short)1, "Quality Engineer", 1m, (short)0 },
+                    { (short)2, "Parts Manager", 1m, (short)0 },
+                    { (short)3, "Workshop Manager", 1m, (short)0 },
+                    { (short)4, "Diagonostic Specialist", 0.6m, (short)3 },
+                    { (short)5, "Quality Specialist", 0.6m, (short)1 },
+                    { (short)6, "Automotive Specialist", 0.6m, (short)3 },
+                    { (short)9, "Trainee", 0m, (short)3 },
+                    { (short)7, "Assistant Diagonostic Specialist", 0.3m, (short)4 },
+                    { (short)8, "Assistant Automotive Specialist", 0.3m, (short)6 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -342,9 +396,9 @@ namespace WrenchWorks.Migrations
                 filter: "[manufacturerArtNo] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_persons_addresses_AddressId",
+                name: "IX_persons_addresses_addressID",
                 table: "persons_addresses",
-                column: "AddressId");
+                column: "addressID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_positions_supervisorID",
@@ -383,14 +437,14 @@ namespace WrenchWorks.Migrations
                 column: "serviceID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_tasks_employees_TaskId",
+                name: "IX_tasks_employees_taskID",
                 table: "tasks_employees",
-                column: "TaskId");
+                column: "taskID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_tasks_parts_TaskId",
+                name: "IX_tasks_parts_taskID",
                 table: "tasks_parts",
-                column: "TaskId");
+                column: "taskID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_vehicles_bodyColor",

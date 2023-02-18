@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using WrenchWorks.Models;
+using WrenchWorks.Services;
 
 namespace WrenchWorks.Data;
 
@@ -11,7 +11,7 @@ public partial class WrenchWorksDbContext : DbContext
     public WrenchWorksDbContext()
     {
     }
-    
+
     public WrenchWorksDbContext(DbContextOptions<WrenchWorksDbContext> options)
         : base(options)
     {
@@ -24,7 +24,7 @@ public partial class WrenchWorksDbContext : DbContext
     public virtual DbSet<Customer> Customers { get; set; }
 
     public virtual DbSet<Employee> Employees { get; set; }
-    
+
     public virtual DbSet<FuelType> FuelTypes { get; set; }
 
     public virtual DbSet<Part> Parts { get; set; }
@@ -40,11 +40,16 @@ public partial class WrenchWorksDbContext : DbContext
     public virtual DbSet<Models.Task> Tasks { get; set; }
 
     public virtual DbSet<Vehicle> Vehicles { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=DESKTOP-7UTOM62;Database=WrenchWorksDB;Trusted_Connection=true;Trust Server Certificate=true;");
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Address>(entity =>
         {
-            entity.HasKey(e => e.AddressId).HasName("PK_addresses_personID_addressID");
+            entity.HasKey(e => e.AddressId).HasName("PK_addresses_addressID");
 
             entity.ToTable("addresses");
 
@@ -74,14 +79,14 @@ public partial class WrenchWorksDbContext : DbContext
 
         modelBuilder.Entity<BodyColor>(entity =>
         {
-            entity.HasKey(e => e.Color).HasName("PK_bodyColors_bodyColor");
+            entity.HasKey(e => e.Color).HasName("PK_bodyColors_color");
 
             entity.ToTable("bodyColors");
 
             entity.Property(e => e.Color)
                 .HasMaxLength(16)
                 .IsUnicode(false)
-                .HasColumnName("bodyColor");
+                .HasColumnName("color");
         });
 
         modelBuilder.Entity<Customer>(entity =>
@@ -157,7 +162,7 @@ public partial class WrenchWorksDbContext : DbContext
             entity.Property(e => e.Fuel)
                 .HasMaxLength(16)
                 .IsUnicode(false)
-                .HasColumnName("fuelType");
+                .HasColumnName("fuel");
         });
 
         modelBuilder.Entity<Part>(entity =>
@@ -199,7 +204,6 @@ public partial class WrenchWorksDbContext : DbContext
                         j.ToTable("tasks_parts");
                     });
         });
-    
 
         modelBuilder.Entity<Person>(entity =>
         {
@@ -208,7 +212,6 @@ public partial class WrenchWorksDbContext : DbContext
             entity.ToTable("persons");
 
             entity.Property(e => e.PersonId).HasColumnName("personID");
-            entity.Property(e => e.AddressId).HasColumnName("addressID");
             entity.Property(e => e.Email)
                 .HasMaxLength(50)
                 .IsUnicode(false)
@@ -224,10 +227,20 @@ public partial class WrenchWorksDbContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("telephoneNumber");
 
-            entity.HasOne(d => d.Address).WithMany(p => p.People)
-                .HasForeignKey(d => d.AddressId)
-                .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("definesPersonsAddress");
+            entity.HasMany(d => d.Addresses).WithMany(p => p.People)
+                .UsingEntity<Dictionary<string, object>>(
+                    "PersonsAddress",
+                    r => r.HasOne<Address>().WithMany()
+                        .HasForeignKey("AddressId")
+                        .HasConstraintName("definesAddressesPerson"),
+                    l => l.HasOne<Person>().WithMany()
+                        .HasForeignKey("PersonId")
+                        .HasConstraintName("definesPersonsAddress"),
+                    j =>
+                    {
+                        j.HasKey("PersonId", "AddressId");
+                        j.ToTable("persons_addresses");
+                    });
         });
 
         modelBuilder.Entity<Position>(entity =>
@@ -245,10 +258,8 @@ public partial class WrenchWorksDbContext : DbContext
                 .HasMaxLength(35)
                 .HasColumnName("positionName");
             entity.Property(e => e.ServiceHourRate)
-                .HasPrecision(2,1)
-                .HasColumnType("decimal")
+                .HasColumnType("decimal(2, 1)")
                 .HasColumnName("serviceHourRate");
-                
             entity.Property(e => e.SupervisorId).HasColumnName("supervisorID");
 
             entity.HasOne(d => d.Supervisor).WithMany(p => p.InverseSupervisor)
@@ -291,6 +302,7 @@ public partial class WrenchWorksDbContext : DbContext
             entity.Property(e => e.ServiceId).HasColumnName("serviceID");
             entity.Property(e => e.CustomerId).HasColumnName("customerID");
             entity.Property(e => e.EmployeeId).HasColumnName("employeeID");
+            entity.Property(e => e.PaidOff).HasColumnName("paidOff");
             entity.Property(e => e.ServiceEndDate)
                 .HasColumnType("date")
                 .HasColumnName("serviceEndDate");
@@ -303,8 +315,6 @@ public partial class WrenchWorksDbContext : DbContext
                 .IsUnicode(false)
                 .IsFixedLength()
                 .HasColumnName("VIN");
-            entity.Property(e => e.PaidOff).HasColumnName("paidOff");
-                
 
             entity.HasOne(d => d.Customer).WithMany(p => p.Services)
                 .HasForeignKey(d => d.CustomerId)
@@ -332,7 +342,9 @@ public partial class WrenchWorksDbContext : DbContext
             entity.Property(e => e.Description)
                 .HasMaxLength(255)
                 .HasColumnName("description");
-            entity.Property(e => e.ExecutionTime).HasColumnName("executionTime");
+            entity.Property(e => e.ExecutionTime)
+                .HasColumnType("decimal(2, 1)")
+                .HasColumnName("executionTime");
             entity.Property(e => e.Name)
                 .HasMaxLength(50)
                 .HasColumnName("name");
@@ -360,7 +372,7 @@ public partial class WrenchWorksDbContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("bodyColor");
             entity.Property(e => e.EngineCapacity)
-                .HasMaxLength(5)
+                .HasColumnType("decimal(2, 1)")
                 .HasColumnName("engineCapacity");
             entity.Property(e => e.EngineNo)
                 .HasMaxLength(16)
@@ -373,6 +385,10 @@ public partial class WrenchWorksDbContext : DbContext
                 .HasMaxLength(30)
                 .HasColumnName("model");
             entity.Property(e => e.PersonId).HasColumnName("personID");
+            entity.Property(e => e.PowerSource)
+                .HasMaxLength(16)
+                .IsUnicode(false)
+                .HasColumnName("powerSource");
             entity.Property(e => e.YearOfProduction)
                 .HasColumnType("date")
                 .HasColumnName("yearOfProduction");
@@ -390,6 +406,7 @@ public partial class WrenchWorksDbContext : DbContext
                 .HasForeignKey<Vehicle>(d => d.Vin)
                 .HasConstraintName("vehicleHasPowerSources");
         });
+        
         modelBuilder.Entity<Position>().HasData(
             new Position { PositionId = 9, SupervisorId = 3, PositionName = "Trainee", ServiceHourRate = (decimal)0.0},
             new Position { PositionId = 7, SupervisorId = 4, PositionName = "Assistant Diagonostic Specialist", ServiceHourRate = (decimal)0.3},
@@ -429,7 +446,9 @@ public partial class WrenchWorksDbContext : DbContext
             new BodyColor { Color = "CUSTOM" }
         );
         
-        
+        CSVSeed.addSeedData("fileAddresses.csv",modelBuilder);
+        CSVSeed.addSeedData("filePersons.csv",modelBuilder);
+
         OnModelCreatingPartial(modelBuilder);
     }
 

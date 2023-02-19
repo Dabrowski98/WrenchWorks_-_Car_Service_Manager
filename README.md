@@ -35,6 +35,11 @@ Copy these connection strings and paste them in appsettings.json "ConnectionStri
 "WrenchWorksIdentityDb": "Server=[INSERT YOUR LOCAL SQL SERVER NAME];Database=WrenchWorksIdentityDB;Trusted_Connection=true;Trust Server Certificate=true;",
 "WrenchWorksDb": "Server=[INSERT YOUR LOCAL SQL SERVER NAME];Database=WrenchWorksDB;Trusted_Connection=true;Trust Server Certificate=true;"
 ```
+Make sure you are currently on project directory
+```
+cs WrenchWorks
+```
+
 Create instances of databases
 ```
 dotnet ef database update --context IdentityDbContext

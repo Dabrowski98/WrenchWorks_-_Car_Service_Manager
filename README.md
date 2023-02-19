@@ -40,7 +40,7 @@ Create instances of databases
 dotnet ef database update --context IdentityDbContext
 dotnet ef database update --context WrenchWorksDbContext
 ```
-Run the application
+Run the application (make sure that you have selected IIS Express configuration)
 ```
 dotnet run
 ```

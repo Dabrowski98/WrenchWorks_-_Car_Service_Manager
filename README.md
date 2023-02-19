@@ -45,7 +45,8 @@ Run the application (make sure that you have selected IIS Express configuration)
 dotnet run
 ```
 ### **DB Diagram**
-![dbschemepic](https://user-images.githubusercontent.com/91785830/219369895-a209c672-70f0-4e99-aae7-a34fdc0e5664.png)
+![FinalDBscheme](https://user-images.githubusercontent.com/91785830/219939146-1f50837f-245f-4b0c-b698-4040a6ace46a.png)
 
 Contributions are welcome! Please fork the repository and submit a pull request.
+
 

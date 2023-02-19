@@ -37,7 +37,7 @@ Copy these connection strings and paste them in appsettings.json "ConnectionStri
 ```
 Make sure you are currently on project directory
 ```
-cs WrenchWorks
+cd WrenchWorks
 ```
 
 Create instances of databases

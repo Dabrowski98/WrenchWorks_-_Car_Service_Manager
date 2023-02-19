@@ -46,9 +46,7 @@ dotnet ef database update --context IdentityDbContext
 dotnet ef database update --context WrenchWorksDbContext
 ```
 Run the application (make sure that you have selected IIS Express configuration)
-```
-dotnet run
-```
+
 ### **DB Diagram**
 ![FinalDBscheme](https://user-images.githubusercontent.com/91785830/219939229-c21f92dd-03f4-420d-be0d-5131030baf6b.png)
 

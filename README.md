@@ -1,4 +1,5 @@
-# :car: **WrenchWorks - Car Service Manager** :wrench:
+# **WrenchWorks - Car Service Manager**
+![wrenchworks](https://github.com/Dabrowski98/WrenchWorks_-_Car_Service_Manager/assets/91785830/ed92474b-7517-4080-852b-46f7055fb7e8)
 
 ### A simple DB-First CRUD application for managing car service station built with ASP.NET Core MVC and SQL.
 **Features**
